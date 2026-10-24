@@ -6,7 +6,7 @@ import { addDocuments, removeDocument } from '@/domain/workspace/commands';
 import { workspaceDocuments } from '@/domain/workspace/selectors';
 import { partyName } from '@/domain/messages/selectors';
 import { ConfirmDialog } from '@/components/ui/Dialog';
-import { Notice, SectionHeading } from '@/components/ui/Feedback';
+import { SectionHeading } from '@/components/ui/Feedback';
 import { AttachmentList, FilePicker } from '@/components/domain/Attachments';
 import { useWorkspace } from './context';
 
@@ -19,9 +19,6 @@ export function DocumentsTab() {
 
   return (
     <div className="max-w-3xl space-y-6">
-      <Notice tone="info" title="Files stay on the device that added them">
-        This demo saves each file’s name, type and size so both personas see the same list. File contents are never uploaded or stored: image previews last until you refresh, and PDFs can’t be opened here.
-      </Notice>
       {active ? (
         <FilePicker
           label="Add documents"

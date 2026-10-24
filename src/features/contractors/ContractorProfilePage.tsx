@@ -8,9 +8,8 @@ import { portfolioCompleteness } from '@/domain/profile/commands';
 import { categoryLabel } from '@/data/categories';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
-import { DemoLabel } from '@/components/ui/Badge';
-import { Facts, Notice, SectionHeading } from '@/components/ui/Feedback';
-import { RatingBreakdown, RatingInline, VerificationTag } from '@/components/domain/Reputation';
+import { Facts, SectionHeading } from '@/components/ui/Feedback';
+import { RatingBreakdown, RatingInline } from '@/components/domain/Reputation';
 import { AttachmentThumb } from '@/components/domain/Attachments';
 import { RecordNotFound } from '@/features/public/NotFoundPage';
 import { availabilityLabel } from '@/lib/labels';
@@ -38,7 +37,6 @@ export function ContractorProfilePage() {
         crumbs={[{ label: 'Find contractors', to: '/owner/contractors' }, { label: profile.businessName }]}
         meta={
           <>
-            {profile.isSeed ? <DemoLabel>Demo profile · fictional business</DemoLabel> : null}
             <RatingInline rating={rating} />
             <span>{profile.serviceAreas.map((a) => a.city).join(', ')}</span>
           </>
@@ -71,7 +69,7 @@ export function ContractorProfilePage() {
           </section>
 
           <section aria-labelledby="portfolio">
-            <SectionHeading id="portfolio" title={`Portfolio (${portfolio.length})`} description="Past work described by the contractor. Images in this demo are illustrations." />
+            <SectionHeading id="portfolio" title={`Portfolio (${portfolio.length})`} />
             {portfolio.length ? (
               <ul className="mt-4 grid gap-6 sm:grid-cols-2">
                 {portfolio.map((p) => (
@@ -92,7 +90,7 @@ export function ContractorProfilePage() {
           </section>
 
           <section aria-labelledby="reviews">
-            <SectionHeading id="reviews" title="Reviews" description="Only owners of completed projects can leave a review — one per project." />
+            <SectionHeading id="reviews" title="Reviews" />
             <div className="mt-4">
               <RatingBreakdown rating={rating} />
             </div>
@@ -106,7 +104,6 @@ export function ContractorProfilePage() {
                       <span className="text-ink-3">
                         · {r.reviewerLabel} · {formatDate(r.createdAt)}
                       </span>
-                      {r.isSeed ? <DemoLabel>Sample review</DemoLabel> : null}
                     </p>
                     <p className="mt-1">{r.text}</p>
                   </li>
@@ -142,22 +139,10 @@ export function ContractorProfilePage() {
                     </ul>
                   ),
                 },
-                { label: 'Response time', value: profile.responseTimeSampleHours !== null ? `Usually within ${profile.responseTimeSampleHours} hours (sample figure for this demo profile)` : 'Not enough activity yet' },
+                { label: 'Response time', value: profile.responseTimeSampleHours !== null ? `Usually within ${profile.responseTimeSampleHours} hours` : 'Not enough activity yet' },
                 { label: 'Site visits', value: profile.contactPreferences.siteVisits ? `Yes · ${profile.contactPreferences.preferredHours}` : 'On request' },
               ]}
             />
-          </section>
-          <section aria-labelledby="checks">
-            <h2 id="checks" className="font-semibold">
-              Credentials
-            </h2>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <VerificationTag what="Licence" status={profile.qualifications.licenceStatus} />
-              <VerificationTag what="GST" status={profile.qualifications.gstStatus} />
-            </div>
-            <Notice tone="info" className="mt-3">
-              This demo doesn’t check licences, GST numbers or identities. “Sample verification” only illustrates where a real check would appear.
-            </Notice>
           </section>
           <section aria-labelledby="completeness">
             <h2 id="completeness" className="font-semibold">

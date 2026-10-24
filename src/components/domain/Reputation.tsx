@@ -1,7 +1,5 @@
 import { Star } from 'lucide-react';
 import type { ReviewAggregate } from '@/domain/reviews/aggregate';
-import type { VerificationStatus } from '@/domain/types';
-import { verificationLabel } from '@/lib/labels';
 import { formatNumber } from '@/lib/format';
 import { cn } from '@/lib/cn';
 
@@ -61,15 +59,3 @@ export function RatingBreakdown({ rating }: { rating: ReviewAggregate }) {
   );
 }
 
-export function VerificationTag({ status, what }: { status: VerificationStatus; what: string }) {
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center rounded-xs border border-dashed px-1.5 py-0.5 text-xs',
-        status === 'not_submitted' ? 'border-line-strong text-ink-3' : 'border-ink-3/60 text-ink-2',
-      )}
-    >
-      {what}: {verificationLabel[status]}
-    </span>
-  );
-}

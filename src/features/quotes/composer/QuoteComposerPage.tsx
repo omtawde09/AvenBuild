@@ -222,7 +222,7 @@ function Composer({ quoteId, crumbs, today, onDone }: { quoteId: QuoteId; crumbs
         className="space-y-10"
       >
         <section aria-labelledby="items">
-          <SectionHeading id="items" title="Line items" description="Quantity × rate per line. Amounts are rounded to the nearest paisa." />
+          <SectionHeading id="items" title="Line items" />
           {err('lineItems') ? <div id="err-lineItems"><FieldError>{err('lineItems')}</FieldError></div> : null}
           <ol className="mt-3 space-y-3">
             {lines.fields.map((f, i) => {
@@ -282,7 +282,7 @@ function Composer({ quoteId, crumbs, today, onDone }: { quoteId: QuoteId; crumbs
               {watched.discountKind && watched.discountKind !== 'none' ? (
                 <TextField label={watched.discountKind === 'percent' ? 'Discount (%)' : 'Discount (₹)'} inputMode="decimal" error={err('discountValue')} {...register('discountValue')} />
               ) : null}
-              <TextField label={`${localeConfig.taxLabel} (%)`} inputMode="decimal" description="Demo input only — not tax advice." error={err('taxPercent')} {...register('taxPercent')} />
+              <TextField label={`${localeConfig.taxLabel} (%)`} inputMode="decimal" error={err('taxPercent')} {...register('taxPercent')} />
             </div>
           </div>
           <div className="border border-line bg-surface p-4" aria-live="polite">
@@ -303,7 +303,7 @@ function Composer({ quoteId, crumbs, today, onDone }: { quoteId: QuoteId; crumbs
         </section>
 
         <section aria-labelledby="milestones" className="space-y-3">
-          <SectionHeading id="milestones" title="Proposed milestones" description="Optional. Shares must add up to 100%. If you leave this empty, a standard three-stage plan is used." />
+          <SectionHeading id="milestones" title="Proposed milestones" description="Optional · shares must total 100%" />
           <ol className="space-y-2">
             {milestones.fields.map((f, i) => (
               <li key={f.id} className="grid grid-cols-[1fr_6rem_auto] items-start gap-2">
@@ -325,7 +325,7 @@ function Composer({ quoteId, crumbs, today, onDone }: { quoteId: QuoteId; crumbs
         </section>
 
         <section aria-labelledby="terms" className="space-y-6">
-          <SectionHeading id="terms" title="What’s included" description="Writing down inclusions and exclusions prevents most disputes." />
+          <SectionHeading id="terms" title="What’s included" />
           <div className="grid gap-6 lg:grid-cols-3">
             <TermsList name="inclusions" label="Included" control={control} register={register} errors={errors} required />
             <TermsList name="exclusions" label="Not included" control={control} register={register} errors={errors} required />

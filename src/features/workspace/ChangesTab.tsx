@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/Button';
 import { StatusBadge } from '@/components/ui/Badge';
 import { ConfirmDialog, Dialog } from '@/components/ui/Dialog';
 import { FieldError, TextArea, TextField } from '@/components/ui/Field';
-import { EmptyState, Notice, SectionHeading } from '@/components/ui/Feedback';
+import { EmptyState, SectionHeading } from '@/components/ui/Feedback';
 import { formatDate, formatDateTime, formatMoney } from '@/lib/format';
 import { useWorkspace } from './context';
 
@@ -154,7 +154,7 @@ export function ChangesTab() {
         open={proposing}
         onClose={() => setProposing(false)}
         title="Propose a change"
-        description="Fill in only what changes. The other party must accept before the agreement updates."
+        description="Fill in only what changes."
         footer={
           <>
             <Button variant="secondary" onClick={() => setProposing(false)}>
@@ -172,7 +172,6 @@ export function ChangesTab() {
             <TextField label="New agreed total (₹)" optional prefix="₹" inputMode="decimal" description={`Currently ${formatMoney(agreement.totalPaise)}`} value={form.newTotal} error={errors.newTotalPaise} onChange={(e) => setForm({ ...form, newTotal: e.target.value })} />
             <TextField type="date" label="New end date" optional description={`Currently ${formatDate(agreement.endDate)}`} value={form.newEndDate} error={errors.newEndDate} onChange={(e) => setForm({ ...form, newEndDate: e.target.value })} />
           </div>
-          <Notice tone="info">Price changes are recorded for planning only. No payment is processed in this demo.</Notice>
         </div>
       </Dialog>
       <ConfirmDialog

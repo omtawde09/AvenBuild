@@ -27,7 +27,7 @@ export function OwnerSettingsPage() {
 
   return (
     <>
-      <PageHeader title="Settings" crumbs={[{ label: 'Home', to: '/owner' }, { label: 'Settings' }]} meta={<span>Your demo persona’s profile and preferences.</span>} />
+      <PageHeader title="Settings" crumbs={[{ label: 'Home', to: '/owner' }, { label: 'Settings' }]} />
       <form
         noValidate
         className="grid max-w-2xl gap-10"
@@ -47,7 +47,6 @@ export function OwnerSettingsPage() {
           </div>
           <SelectField
             label="How contractors can reach you"
-            description="Phone numbers and addresses are never shared in this marketplace."
             options={[
               { value: 'messages_only', label: 'In-app messages only' },
               { value: 'messages_and_site_visits', label: 'In-app messages, and site visits during my listed hours' },

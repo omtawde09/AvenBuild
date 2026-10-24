@@ -60,11 +60,10 @@ export function WorkspaceOverview() {
               </li>
             ))}
           </ol>
-          <p className="mt-2 text-xs text-ink-3">Agreed values are for planning only. Demo only — no payment is processed.</p>
         </section>
 
         <section aria-labelledby="agreed">
-          <SectionHeading id="agreed" title={`Agreed quote (revision ${ws.acceptedQuoteRevision})`} description="Frozen copy of the accepted quote. Changes after acceptance are recorded as agreement revisions below." />
+          <SectionHeading id="agreed" title={`Agreed quote (revision ${ws.acceptedQuoteRevision})`} />
           <div className="mt-4">
             <QuoteBreakdown content={ws.acceptedContent} />
           </div>

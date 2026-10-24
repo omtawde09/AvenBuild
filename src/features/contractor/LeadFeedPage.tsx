@@ -18,6 +18,7 @@ import { ListToolbar, type ActiveFilter } from '@/components/ui/ListToolbar';
 import { budgetLabel, startLabel } from '@/lib/labels';
 import { formatRelative } from '@/lib/format';
 import { pickEnum, useUrlState } from '@/lib/useUrlState';
+import { MatchChips } from './MatchChips';
 
 const VIEWS = ['matched', 'saved', 'ignored'] as const;
 const SORTS = ['newest', 'start_soonest', 'budget_high', 'budget_low', 'fewest_quotes'] as const;
@@ -62,20 +63,9 @@ function LeadItem({ row }: { row: LeadRow }) {
             {startLabel(p)}
           </span>
         </p>
-        <ul className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-ok" aria-label="Why this lead matches">
-          {row.match.reasons.map((r) => (
-            <li key={r.label}>✓ {r.label}</li>
-          ))}
-          {row.match.misses
-            .filter((m) => m.kind === 'budget' || m.kind === 'timing')
-            .map((m) => (
-              <li key={m.label} className="text-warn">
-                ! {m.label}
-              </li>
-            ))}
-        </ul>
+        <MatchChips reasons={row.match.reasons} misses={row.match.misses} />
         <p className="text-xs text-ink-3">
-          Posted {p.publishedAt ? formatRelative(p.publishedAt) : ''} · {row.quoteCount} {row.quoteCount === 1 ? 'quote' : 'quotes'} so far
+          Posted {p.publishedAt ? formatRelative(p.publishedAt) : ''} · {row.quoteCount} {row.quoteCount === 1 ? 'quote' : 'quotes'}
         </p>
       </div>
       <div className="flex flex-wrap items-start gap-2 sm:flex-col sm:items-end">
@@ -180,7 +170,6 @@ export function LeadFeedPage() {
       <PageHeader
         title="Leads"
         crumbs={[{ label: 'Home', to: '/contractor' }, { label: 'Leads' }]}
-        meta={<span>Open projects that match your services and service areas. Matching is rule-based — the reasons are shown on each lead.</span>}
       />
       <TabStrip
         label="Lead views"

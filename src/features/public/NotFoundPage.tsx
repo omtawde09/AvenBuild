@@ -8,9 +8,9 @@ export function NotFoundPage() {
     <section className="container-page py-16">
       <p className="eyebrow">404</p>
       <h1 className="mt-2 text-3xl font-semibold">This page doesn’t exist</h1>
-      <p className="mt-2 max-w-lg text-ink-2">The link may be mistyped, or the item may have been removed when demo data was reset.</p>
+      <p className="mt-2 max-w-lg text-ink-2">The link may be mistyped, or the page may have been removed.</p>
       <div className="mt-6 flex flex-wrap gap-2">
-        {role ? <ButtonLink to={roleHome[role]}>Go to my dashboard</ButtonLink> : <ButtonLink to="/start">Choose a demo persona</ButtonLink>}
+        {role ? <ButtonLink to={roleHome[role]}>Go to my dashboard</ButtonLink> : <ButtonLink to="/start">Get started</ButtonLink>}
         <ButtonLink to="/" variant="secondary">
           Home page
         </ButtonLink>
@@ -26,7 +26,7 @@ export function RecordNotFound({ what, backTo, backLabel }: { what: string; back
       <p className="eyebrow">Not found</p>
       <h1 className="mt-2 text-2xl font-semibold">We couldn’t find that {what}</h1>
       <p className="mt-2 max-w-lg text-ink-2">
-        It may have been deleted, or the demo data may have been reset (possibly in another tab).
+        It may have been deleted or moved.
       </p>
       <ButtonLink to={backTo} className="mt-5">
         {backLabel}

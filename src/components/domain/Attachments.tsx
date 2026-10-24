@@ -31,7 +31,7 @@ export function AttachmentThumb({ file, className }: { file: AttachmentMeta; cla
 
 function previewNote(file: AttachmentMeta): string {
   if (file.previewKind === 'seed') return `Sample illustration (${seedArtLabel(file.seedArt).toLowerCase()})`;
-  if (file.previewKind === 'session') return previewUrlFor(file.id) ? 'Preview available until you refresh' : 'Preview not available after refresh — files aren’t stored in this demo';
+  if (file.previewKind === 'session') return previewUrlFor(file.id) ? '' : 'Preview unavailable';
   return file.mimeType === 'application/pdf' ? 'PDF · name and size only (not stored)' : 'No preview';
 }
 

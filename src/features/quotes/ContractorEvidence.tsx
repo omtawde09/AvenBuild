@@ -3,10 +3,9 @@ import { Clock, Images, MapPin, Users } from 'lucide-react';
 import type { DemoState } from '@/domain/types';
 import { aggregateReviews } from '@/domain/reviews/aggregate';
 import { availabilityLabel } from '@/lib/labels';
-import { RatingInline, VerificationTag } from '@/components/domain/Reputation';
-import { DemoLabel } from '@/components/ui/Badge';
+import { RatingInline } from '@/components/domain/Reputation';
 
-/** Trust evidence shown next to a quote: reviews, experience, response sample and demo verification labels. */
+/** Trust evidence shown next to a quote: reviews, experience, portfolio and typical response time. */
 export function ContractorEvidence({ state, contractorId, compact = false }: { state: DemoState; contractorId: string; compact?: boolean }) {
   const profile = state.contractorProfiles[contractorId];
   if (!profile) return null;
@@ -18,7 +17,6 @@ export function ContractorEvidence({ state, contractorId, compact = false }: { s
         <Link to={`/owner/contractors/${contractorId}`} className="font-semibold underline-offset-2 hover:underline">
           {profile.businessName}
         </Link>
-        {profile.isSeed ? <DemoLabel>Demo profile</DemoLabel> : null}
       </div>
       <RatingInline rating={rating} />
       <ul className="space-y-1 text-ink-2">
@@ -37,17 +35,11 @@ export function ContractorEvidence({ state, contractorId, compact = false }: { s
         {profile.responseTimeSampleHours !== null ? (
           <li className="flex items-center gap-1.5">
             <Clock aria-hidden className="size-3.5 shrink-0" />
-            Usually replies within {profile.responseTimeSampleHours} h <span className="text-ink-3">(sample figure)</span>
+            Usually replies within {profile.responseTimeSampleHours} h
           </li>
         ) : null}
         {!compact ? <li>{availabilityLabel[profile.availability.status]}</li> : null}
       </ul>
-      {!compact ? (
-        <div className="flex flex-wrap gap-1.5">
-          <VerificationTag what="Licence" status={profile.qualifications.licenceStatus} />
-          <VerificationTag what="GST" status={profile.qualifications.gstStatus} />
-        </div>
-      ) : null}
     </div>
   );
 }

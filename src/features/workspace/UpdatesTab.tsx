@@ -42,7 +42,7 @@ export function UpdatesTab() {
   return (
     <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.3fr_1fr]">
       <section aria-labelledby="updates-list">
-        <SectionHeading id="updates-list" title="Site updates" description="Dated notes from the site, newest first." />
+        <SectionHeading id="updates-list" title="Site updates" />
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div>
             <p className="text-xs font-semibold text-ink-3 uppercase">Agreed progress (from milestones)</p>

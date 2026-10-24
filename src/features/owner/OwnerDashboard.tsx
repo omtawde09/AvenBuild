@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, CircleAlert, Clock, Plus } from 'lucide-react';
+import { ArrowRight, CircleAlert, CircleCheck, Clock, FileText, HardHat, PencilLine, Plus } from 'lucide-react';
+import { StatTiles } from '@/components/ui/StatTiles';
 import { useActorId, useData, todayISO } from '@/app/store/demoStore';
 import { ownerNextActions, ownerProjects, ownerVisibleQuotes, PROJECT_GROUPS } from '@/domain/projects/selectors';
 import { conversationsFor, partyName } from '@/domain/messages/selectors';
@@ -13,6 +14,8 @@ import { StatusBadge } from '@/components/ui/Badge';
 import { formatMoney, formatRelative, formatShortDate } from '@/lib/format';
 import { ProjectRow } from '@/features/projects/ProjectRow';
 import { cn } from '@/lib/cn';
+
+const groupIcon = { quoting: FileText, active: HardHat, drafts: PencilLine, closed: CircleCheck } as const;
 
 export function OwnerDashboard() {
   const data = useData();
@@ -44,8 +47,7 @@ export function OwnerDashboard() {
   return (
     <>
       <PageHeader
-        title={`Good to see you, ${user?.displayName.split(' ')[0] ?? 'there'}`}
-        meta={<span>Your projects, quotes and site activity in one place.</span>}
+        title={`Hi, ${user?.displayName.split(' ')[0] ?? 'there'}`}
         actions={
           <ButtonLink to="/owner/projects/new" icon={<Plus aria-hidden className="size-4" />}>
             Post a project
@@ -53,23 +55,12 @@ export function OwnerDashboard() {
         }
       />
 
-      <dl className="mb-8 grid grid-cols-2 border-y border-line sm:grid-cols-4">
-        {counts.map((c, i) => (
-          <div key={c.value} className={cn('px-1 py-3 sm:px-4', i > 0 && 'sm:border-l sm:border-line', i % 2 === 1 && 'border-l border-line sm:border-l')}>
-            <dt className="text-xs font-semibold tracking-wide text-ink-3 uppercase">{c.label}</dt>
-            <dd className="mt-0.5 font-condensed text-3xl font-semibold tabular">
-              <Link to={`/owner/projects?group=${c.value}`} className="hover:underline hover:underline-offset-2" aria-label={`${c.count} ${c.label}: view list`}>
-                {c.count}
-              </Link>
-            </dd>
-          </div>
-        ))}
-      </dl>
+      <StatTiles items={counts.map((c) => ({ label: c.label, value: c.count, to: `/owner/projects?group=${c.value}`, icon: groupIcon[c.value] }))} />
 
       <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-10">
           <section aria-labelledby="next-actions">
-            <SectionHeading id="next-actions" title="Needs your attention" description="Things only you can move forward." />
+            <SectionHeading id="next-actions" title="Needs your attention" />
             {actions.length ? (
               <ol className="mt-3 divide-y divide-line border-y border-line">
                 {actions.map((a) => (

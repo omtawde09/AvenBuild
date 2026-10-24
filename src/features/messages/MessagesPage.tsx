@@ -75,7 +75,7 @@ function Thread({ conversationId }: { conversationId: string }) {
   const scroller = useRef<HTMLDivElement>(null);
   const lastCount = useRef(0);
 
-  // Opening (or receiving new messages while viewing) marks the thread read for this persona.
+  // Opening (or receiving new messages while viewing) marks the thread read for the viewer.
   const latest = messages.at(-1)?.sentAt ?? '';
   const lastRead = c?.lastReadAt[me] ?? '';
   useEffect(() => {
@@ -98,7 +98,7 @@ function Thread({ conversationId }: { conversationId: string }) {
     return (
       <div className="p-6">
         <h1 className="text-xl font-semibold">Conversation not found</h1>
-        <p className="mt-1 text-ink-2">It may have been removed when demo data was reset, or it belongs to someone else.</p>
+        <p className="mt-1 text-ink-2">It may have been removed, or it belongs to someone else.</p>
         <Link to="/messages" className="mt-3 inline-flex min-h-11 items-center font-semibold underline underline-offset-2">
           All messages
         </Link>
@@ -232,7 +232,7 @@ function Thread({ conversationId }: { conversationId: string }) {
           </div>
           {error ? <FieldError>{error}</FieldError> : null}
           <p id="composer-help" className="mt-1 text-xs text-ink-3">
-            {body.length > MESSAGE_MAX - 200 ? `${body.length}/${MESSAGE_MAX} · ` : ''}Ctrl + Enter to send. Stored only in this browser — the other persona sees it when you switch.
+            {body.length > MESSAGE_MAX - 200 ? `${body.length}/${MESSAGE_MAX} · ` : ''}Ctrl + Enter to send
           </p>
         </form>
       )}

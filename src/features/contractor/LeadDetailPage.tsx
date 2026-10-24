@@ -18,6 +18,7 @@ import { AttachmentList } from '@/components/domain/Attachments';
 import { RecordNotFound } from '@/features/public/NotFoundPage';
 import { budgetLabel, durationLabel, materialLabel, projectCategoryLabel, propertyTypeLabel, siteVisitLabel, startLabel } from '@/lib/labels';
 import { formatDate } from '@/lib/format';
+import { MatchChips } from './MatchChips';
 
 /** Contractor view of a project brief. Owner contact details are never shown; contact happens in-app. */
 export function LeadDetailPage() {
@@ -141,21 +142,9 @@ export function LeadDetailPage() {
         <aside className="space-y-6" aria-label="Lead summary">
           <section aria-labelledby="why" className="border border-line bg-surface p-4">
             <h2 id="why" className="font-semibold">
-              Why you’re seeing this
+              Why it matches
             </h2>
-            <ul className="mt-2 space-y-1 text-sm">
-              {match.reasons.map((r) => (
-                <li key={r.label} className="text-ok">
-                  ✓ <span className="text-ink">{r.label}</span>
-                </li>
-              ))}
-              {match.misses.map((m) => (
-                <li key={m.label} className="text-warn">
-                  ! <span className="text-ink">{m.label}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-3 text-xs text-ink-3">Matching uses your listed services and service areas. Budget and timing are shown for information.</p>
+            <MatchChips className="mt-2" reasons={match.reasons} misses={match.misses} />
           </section>
           <section aria-labelledby="lead-facts">
             <h2 id="lead-facts" className="sr-only">
@@ -166,10 +155,9 @@ export function LeadDetailPage() {
               items={[
                 { label: 'Posted', value: project.publishedAt ? formatDate(project.publishedAt) : '—' },
                 { label: 'Quotes so far', value: String(liveQuoteCount(data, pid)) },
-                { label: 'Owner', value: `${owner ? owner.displayName.split(' ')[0] : 'Property owner'} · contact through in-app messages` },
+                { label: 'Owner', value: owner ? owner.displayName.split(' ')[0] : 'Property owner' },
               ]}
             />
-            <p className="mt-2 text-xs text-ink-3">Owners’ phone numbers and addresses are not shared in this marketplace. Use messages to arrange a site visit.</p>
           </section>
           <section aria-label="Lead actions" className="flex flex-wrap gap-2">
             {disposition === 'ignored' ? (

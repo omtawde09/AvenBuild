@@ -8,7 +8,6 @@ import type { UserId } from '@/domain/ids';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/Feedback';
-import { DemoLabel } from '@/components/ui/Badge';
 import { RatingInline } from '@/components/domain/Reputation';
 import { formatDate } from '@/lib/format';
 import { ShortlistButton } from './ContractorActions';
@@ -25,7 +24,7 @@ export function ShortlistPage() {
   );
   return (
     <>
-      <PageHeader title="Shortlist" crumbs={[{ label: 'Home', to: '/owner' }, { label: 'Shortlist' }]} meta={<span>Contractors you’ve saved to come back to.</span>} />
+      <PageHeader title="Shortlist" crumbs={[{ label: 'Home', to: '/owner' }, { label: 'Shortlist' }]} />
       {entries.length ? (
         <ul className="divide-y divide-line border-y border-line">
           {entries.map((e) => {
@@ -38,7 +37,6 @@ export function ShortlistPage() {
                     <Link to={`/owner/contractors/${p.userId}`} className="font-semibold underline-offset-2 hover:underline">
                       {p.businessName}
                     </Link>
-                    {p.isSeed ? <DemoLabel>Demo profile</DemoLabel> : null}
                   </div>
                   <RatingInline rating={rating} />
                   <p className="text-sm text-ink-2">{p.services.map(categoryLabel).join(' · ')}</p>

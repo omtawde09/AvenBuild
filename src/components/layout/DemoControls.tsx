@@ -9,7 +9,6 @@ import { useDemoDialogs } from './demoDialogs';
 import { personaRole, useDemoStore } from '@/app/store/demoStore';
 import { cn } from '@/lib/cn';
 
-
 export function PersonaList({ onChoose, activeId }: { onChoose: (id: (typeof personaCards)[number]['id']) => void; activeId: string | null }) {
   return (
     <ul className="grid gap-3">
@@ -34,7 +33,7 @@ export function PersonaList({ onChoose, activeId }: { onChoose: (id: (typeof per
                 <span className="eyebrow block">{roleLabel[p.role]}</span>
                 <span className="block font-semibold">{p.name}</span>
                 <span className="mt-0.5 block text-sm text-ink-2">{p.summary}</span>
-                {active ? <span className="mt-1 block text-sm font-semibold text-ok">Currently viewing</span> : null}
+                {active ? <span className="mt-1 block text-sm font-semibold text-ok">Signed in</span> : null}
               </span>
               <ArrowRight aria-hidden className="mt-3 size-4 shrink-0 text-ink-3 group-hover:text-ink" />
             </button>
@@ -45,7 +44,7 @@ export function PersonaList({ onChoose, activeId }: { onChoose: (id: (typeof per
   );
 }
 
-/** Persona switch + reset dialogs, rendered once per layout. */
+/** Account switch + reset dialogs, rendered once per layout. */
 export function DemoControlDialogs() {
   const open = useDemoDialogs((s) => s.open);
   const show = useDemoDialogs((s) => s.show);
@@ -60,8 +59,7 @@ export function DemoControlDialogs() {
       <Dialog
         open={open === 'persona'}
         onClose={() => show(null)}
-        title="Switch demo persona"
-        description="This is a testing shortcut, not a sign-in. Both personas share the data stored in this browser, so you can act on both sides of the same project."
+        title="Switch account"
       >
         <PersonaList
           activeId={activeId}
@@ -71,23 +69,23 @@ export function DemoControlDialogs() {
             if (!role || id === activeId) return;
             setPersona(id);
             const card = personaCards.find((p) => p.id === id);
-            toast.info(`Now viewing as ${card?.name ?? 'persona'} (${roleLabel[role]}).`);
+            toast.info(`Switched to ${card?.name ?? roleLabel[role]}.`);
             navigate(landingAfterSwitch(pathname, role));
           }}
         />
       </Dialog>
       <ConfirmDialog
         open={open === 'reset'}
-        title="Reset demo data?"
-        body="Everything you created or changed in this browser — projects, quotes, messages, reviews and profile edits — will be replaced with the original sample data. This can't be undone."
-        confirmLabel="Reset demo data"
+        title="Reset all data?"
+        body="Projects, quotes, messages, reviews and profile changes will go back to the starting set. This can't be undone."
+        confirmLabel="Reset data"
         tone="danger"
         onCancel={() => show(null)}
         onConfirm={() => {
           show(null);
           resetDemo();
           navigate('/start');
-          toast.success('Demo data was reset to the original sample scenario.');
+          toast.success('Data reset.');
         }}
       />
     </>

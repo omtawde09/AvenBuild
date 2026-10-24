@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, Inbox } from 'lucide-react';
+import { ArrowRight, Bookmark, HardHat, Hourglass, Inbox } from 'lucide-react';
+import { StatTiles, type StatTile } from '@/components/ui/StatTiles';
 import { useActorId, useData, todayISO } from '@/app/store/demoStore';
 import { contractorMetrics, upcomingMilestones } from '@/domain/leads/selectors';
 import { contractorPipeline } from '@/domain/leads/pipeline';
@@ -27,39 +28,24 @@ export function ContractorDashboard() {
   const upcoming = useMemo(() => upcomingMilestones(data, me, today), [data, me, today]);
   const completeness = profile ? portfolioCompleteness(data, profile) : null;
 
-  const stats: Array<{ label: string; value: number; to: string; hint: string }> = [
-    { label: 'New matching leads', value: metrics.newLeads, to: '/contractor/leads', hint: 'Open projects in your trades and areas you haven’t quoted on' },
-    { label: 'Saved leads', value: metrics.saved, to: '/contractor/leads?view=saved', hint: 'Leads you saved for later' },
-    { label: 'Awaiting owner', value: metrics.awaitingOwner, to: '/contractor/quotes?stage=submitted', hint: 'Quotes submitted, no decision yet' },
-    { label: 'Active jobs', value: metrics.activeJobs, to: '/workspace', hint: 'Accepted projects with an active workspace' },
+  const stats: StatTile[] = [
+    { label: 'New leads', value: metrics.newLeads, to: '/contractor/leads', icon: Inbox },
+    { label: 'Saved leads', value: metrics.saved, to: '/contractor/leads?view=saved', icon: Bookmark },
+    { label: 'Awaiting owner', value: metrics.awaitingOwner, to: '/contractor/quotes?stage=submitted', icon: Hourglass },
+    { label: 'Active jobs', value: metrics.activeJobs, to: '/workspace', icon: HardHat },
   ];
 
   return (
     <>
       <PageHeader
         title={profile?.businessName ?? 'Dashboard'}
-        meta={<span>Leads, quotes and jobs for your business.</span>}
         actions={
           <ButtonLink to="/contractor/leads" icon={<Inbox aria-hidden className="size-4" />}>
             Browse leads
           </ButtonLink>
         }
       />
-      <dl className="mb-3 grid grid-cols-2 border-y border-line sm:grid-cols-4">
-        {stats.map((s, i) => (
-          <div key={s.label} className={cn('px-1 py-3 sm:px-4', i % 2 === 1 && 'border-l border-line', i > 0 && 'sm:border-l')}>
-            <dt className="text-xs font-semibold tracking-wide text-ink-3 uppercase">{s.label}</dt>
-            <dd className="mt-0.5">
-              <Link to={s.to} className="font-condensed text-3xl font-semibold tabular hover:underline hover:underline-offset-2" aria-label={`${s.value} ${s.label}. ${s.hint}`}>
-                {s.value}
-              </Link>
-            </dd>
-          </div>
-        ))}
-      </dl>
-      <p className="mb-8 text-xs text-ink-3">
-        Counts come from the projects and quotes stored in this demo. Owners have decided on {metrics.decided} of your quotes so far; {metrics.accepted} {metrics.accepted === 1 ? 'was' : 'were'} accepted.
-      </p>
+      <StatTiles items={stats} />
 
       <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-10">

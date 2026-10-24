@@ -44,12 +44,6 @@ export function MilestonesTab() {
   return (
     <div className="max-w-3xl space-y-4">
       {!active ? <Notice tone="info">This workspace is read-only.</Notice> : null}
-      <p className="text-sm text-ink-2">
-        {role === 'contractor'
-          ? 'Start a milestone when work begins, then submit it with a short note on what was done. The owner approves it or asks for changes.'
-          : 'When the contractor submits a milestone, check the work and approve it or ask for changes with a note.'}{' '}
-        Values are shares of the agreed {formatMoney(agreement.totalPaise)} — demo only, no payment is processed.
-      </p>
       <ol className="space-y-3">
         {milestones.map((m) => {
           const overdue = active && m.status !== 'approved' && m.targetDate < today;
@@ -165,7 +159,7 @@ export function MilestonesTab() {
       <ConfirmDialog
         open={action?.kind === 'approve'}
         title={`Approve “${action?.milestone.title ?? ''}”?`}
-        body="Approving confirms you’re satisfied with this stage. It can’t be undone. No payment is processed in this demo."
+        body="Approving confirms you’re satisfied with this stage. It can’t be undone."
         confirmLabel="Approve milestone"
         tone="accent"
         onCancel={close}
@@ -175,7 +169,7 @@ export function MilestonesTab() {
         open={action?.kind === 'edit'}
         onClose={close}
         title="Edit milestone"
-        description="Title, description and target date can change before work starts. Shares and agreed value change only through a change request."
+        
         footer={
           <>
             <Button variant="secondary" onClick={close}>

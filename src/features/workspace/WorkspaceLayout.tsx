@@ -28,7 +28,7 @@ export function WorkspaceLayout() {
       <section className="py-10">
         <p className="eyebrow">Not part of this project</p>
         <h1 className="mt-2 text-2xl font-semibold">You’re not part of this project</h1>
-        <p className="mt-2 max-w-lg text-ink-2">Only the property owner and the contractor whose quote was accepted can open this workspace. (In this demo this is a convenience check, not a security control.)</p>
+        <p className="mt-2 max-w-lg text-ink-2">Only the property owner and the contractor whose quote was accepted can open this workspace.</p>
         <ButtonLink to="/workspace" className="mt-5">
           My workspaces
         </ButtonLink>

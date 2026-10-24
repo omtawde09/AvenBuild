@@ -1,64 +1,63 @@
-import { Link } from 'react-router';
-import { RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { Building2, ChevronDown, HardHat, RotateCcw } from 'lucide-react';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import { useDemoDialogs } from '@/components/layout/demoDialogs';
-import { brand } from '@/config/brand';
 
-const limits = [
-  ['No backend or database', 'All data lives in this browser’s local storage. Nothing is sent to a server, and there is no account system.'],
-  ['No real sign-in', 'The two personas are fictional sample accounts. Choosing one is a testing shortcut, not authentication, and offers no security.'],
-  ['No real verification', 'Labels such as “Sample verification · demo data” are illustrations. No identity, licence or GST number has been checked. Fields you fill in show “Not submitted”.'],
-  ['No payments', 'The demo never asks for card or bank details and never moves money. Milestone values are shown for planning only.'],
-  ['No email, SMS or push', 'Notifications appear only inside this app, in this browser.'],
-  ['No cross-device or multi-user sync', 'Another device, browser or person will not see your changes. Two tabs in this same browser do stay in step.'],
-  ['Files are not uploaded', 'Only a file’s name, type and size are saved. Image previews last until you refresh the page.'],
+const guides = [
+  {
+    icon: Building2,
+    title: 'For property owners',
+    steps: ['Post a project with photos, budget and timing', 'Compare itemised quotes side by side', 'Accept one, then track milestones and updates'],
+  },
+  {
+    icon: HardHat,
+    title: 'For contractors',
+    steps: ['See leads in your trades and areas', 'Send an itemised quote with your terms', 'Post site updates and submit milestones'],
+  },
 ] as const;
 
 const faqs = [
-  ['How do I see both sides of a project?', 'Use “Switch persona” in the top bar (or More → Switch demo persona on a phone). Both personas read and write the same local data, so a quote sent as the contractor appears for the owner straight away.'],
-  ['Are the contractors, reviews and ratings real?', 'No. Every business, person, locality detail and review is fictional sample content written for this demo.'],
-  ['Why did my image preview disappear?', 'Images you pick are shown from temporary browser memory and are not stored. After a refresh the file name and size remain, but the preview is gone.'],
-  ['What happens if saved data is damaged?', 'If the stored demo data can’t be read, the app restores the original sample scenario and tells you so, instead of crashing.'],
-  ['Can I start over?', 'Yes. “Reset demo data” restores the original sample scenario. It removes everything you created in this browser.'],
+  ['How do I switch between owner and contractor?', 'Open the account menu (your initials, top right) and choose Switch account.'],
+  ['Who can see my project?', 'Only contractors whose trade and service area match. Your address and phone number are never shown.'],
+  ['Can I change a quote after sending it?', 'Withdraw it and resubmit, or wait for the owner to ask for a revision. Earlier versions stay on record.'],
+  ['How do price or date changes work after a job starts?', 'Either side proposes a change request. The agreement updates only when the other side accepts it.'],
+  ['When can I leave a review?', 'After the owner marks the project complete. One review per project.'],
 ] as const;
 
 export function HelpPage() {
   const show = useDemoDialogs((s) => s.show);
   return (
     <div className="container-page max-w-3xl py-10 md:py-14">
-      <p className="eyebrow">Help &amp; about this demo</p>
-      <h1 className="mt-3 text-3xl font-semibold md:text-4xl">What {brand.name} is — and what this demo can’t do</h1>
-      <p className="mt-4 text-lg text-ink-2">
-        {brand.name} is a working prototype of a marketplace that connects property owners with contractors, from the first project
-        brief to the final review. It is fully interactive, but everything happens locally in your browser.
-      </p>
+      <h1 className="text-3xl font-semibold md:text-4xl">Help</h1>
 
-      <section aria-labelledby="limits" className="mt-10">
-        <h2 id="limits" className="text-xl font-semibold">
-          Demo limitations
-        </h2>
-        <dl className="mt-4 divide-y divide-line border-y border-line">
-          {limits.map(([term, body]) => (
-            <div key={term} className="grid gap-1 py-4 sm:grid-cols-[14rem_1fr] sm:gap-6">
-              <dt className="font-semibold">{term}</dt>
-              <dd className="text-ink-2">{body}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+        {guides.map(({ icon: Icon, title, steps }) => (
+          <section key={title} aria-label={title} className="rounded-md border border-line bg-surface p-5">
+            <span className="inline-flex size-10 items-center justify-center rounded-md bg-ink text-paper">
+              <Icon aria-hidden className="size-5" />
+            </span>
+            <h2 className="mt-3 font-semibold">{title}</h2>
+            <ol className="mt-2 space-y-2">
+              {steps.map((s, i) => (
+                <li key={s} className="flex gap-2 text-sm text-ink-2">
+                  <span className="font-mono text-brick">{i + 1}</span>
+                  {s}
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
 
       <section aria-labelledby="faq" className="mt-10">
         <h2 id="faq" className="text-xl font-semibold">
-          Questions
+          Common questions
         </h2>
-        <div className="mt-4 divide-y divide-line border-y border-line">
+        <div className="mt-3 divide-y divide-line border-y border-line">
           {faqs.map(([q, a]) => (
-            <details key={q} className="group py-1">
-              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 font-semibold">
+            <details key={q} className="group">
+              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 py-2 font-medium">
                 {q}
-                <span aria-hidden className="font-mono text-lg text-ink-3 group-open:rotate-45">
-                  +
-                </span>
+                <ChevronDown aria-hidden className="size-4 shrink-0 text-ink-3 transition-transform group-open:rotate-180" />
               </summary>
               <p className="pb-4 text-ink-2">{a}</p>
             </details>
@@ -66,23 +65,20 @@ export function HelpPage() {
         </div>
       </section>
 
-      <section aria-labelledby="data" className="mt-10 border border-line bg-surface p-5">
-        <h2 id="data" className="text-xl font-semibold">
-          Demo data controls
-        </h2>
-        <p className="mt-2 text-ink-2">
-          Reset restores the original sample projects, quotes, messages and profiles. It can’t be undone.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
+      <section aria-labelledby="trouble" className="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-md border border-line p-4">
+        <div>
+          <h2 id="trouble" className="font-semibold">
+            Troubleshooting
+          </h2>
+          <p className="text-sm text-ink-2">Start over with the original projects and accounts.</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <ButtonLink to="/start" variant="secondary">
+            Switch account
+          </ButtonLink>
           <Button variant="danger" icon={<RotateCcw aria-hidden className="size-4" />} onClick={() => show('reset')}>
-            Reset demo data
+            Reset app data
           </Button>
-          <Button variant="secondary" onClick={() => show('persona')}>
-            Switch demo persona
-          </Button>
-          <Link to="/start" className="inline-flex min-h-11 items-center px-2 font-semibold underline underline-offset-2">
-            Persona selection page
-          </Link>
         </div>
       </section>
     </div>

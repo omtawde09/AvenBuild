@@ -24,7 +24,7 @@ export function WorkspaceListPage() {
   );
   return (
     <>
-      <PageHeader title="Workspaces" crumbs={[{ label: 'Home', to: role === 'owner' ? '/owner' : '/contractor' }, { label: 'Workspaces' }]} meta={<span>A workspace is created when an owner accepts a quote. Both parties share it.</span>} />
+      <PageHeader title="Workspaces" crumbs={[{ label: 'Home', to: role === 'owner' ? '/owner' : '/contractor' }, { label: 'Workspaces' }]} />
       {list.length ? (
         <ul className="divide-y divide-line border-y border-line">
           {list.map((w) => {

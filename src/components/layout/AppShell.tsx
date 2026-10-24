@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
-import { Bell, ChevronDown, CircleHelp, Ellipsis, FlaskConical, MessagesSquare, Repeat2, RotateCcw, Settings } from 'lucide-react';
+import { Bell, ChevronDown, CircleHelp, Ellipsis, MessagesSquare, Repeat2, Settings } from 'lucide-react';
 import { brand } from '@/config/brand';
 import { roleHome, roleLabel, type Role } from '@/domain/roles';
 import { personaCards } from '@/data/personas';
@@ -18,29 +18,6 @@ import { StorageNotices } from './StorageNotices';
 
 /** Paths where the flow owns the bottom of the screen (wizard/composer/thread), so the bottom nav hides. */
 const FOCUS_FLOW = [/^\/owner\/projects\/new$/, /^\/owner\/projects\/[^/]+\/edit$/, /^\/contractor\/leads\/[^/]+\/quote$/, /^\/messages\/[^/]+$/];
-
-export function DemoBanner() {
-  const show = useDemoDialogs((s) => s.show);
-  return (
-    <div className="border-b border-warn/30 bg-warn-tint text-ink">
-      <div className="mx-auto flex max-w-[90rem] items-center gap-2 px-4 py-1 text-[0.8125rem]">
-        <FlaskConical aria-hidden className="size-4 shrink-0 text-warn" />
-        <p className="min-w-0 flex-1 truncate">
-          <strong className="font-semibold">Demo mode</strong>
-          <span className="hidden sm:inline"> — data is stored only in this browser and doesn’t sync to other devices or people.</span>
-          <span className="sm:hidden"> · data stays in this browser</span>
-        </p>
-        <Link to="/help" className="hidden min-h-9 items-center px-2 font-semibold underline underline-offset-2 sm:inline-flex">
-          About this demo
-        </Link>
-        <button type="button" onClick={() => show('reset')} className="inline-flex min-h-9 items-center gap-1 px-2 font-semibold underline underline-offset-2">
-          <RotateCcw aria-hidden className="size-3.5" />
-          Reset<span className="hidden sm:inline">&nbsp;demo data</span>
-        </button>
-      </div>
-    </div>
-  );
-}
 
 function useBadge(item: NavItem) {
   const counts = useShellCounts();
@@ -126,7 +103,7 @@ function MoreSheet({ role, open, onClose }: { role: Role; open: boolean; onClose
           <li>
             <NavLink to="/help" onClick={onClose} className="flex min-h-12 items-center gap-3 rounded-sm px-2 text-base hover:bg-sunken">
               <CircleHelp aria-hidden className="size-5 text-ink-2" />
-              Help &amp; about this demo
+              Help
             </NavLink>
           </li>
           <li>
@@ -139,20 +116,7 @@ function MoreSheet({ role, open, onClose }: { role: Role; open: boolean; onClose
               className="flex min-h-12 w-full items-center gap-3 rounded-sm px-2 text-left text-base hover:bg-sunken"
             >
               <Repeat2 aria-hidden className="size-5 text-ink-2" />
-              Switch demo persona
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                show('reset');
-              }}
-              className="flex min-h-12 w-full items-center gap-3 rounded-sm px-2 text-left text-base text-bad hover:bg-bad-tint"
-            >
-              <RotateCcw aria-hidden className="size-5" />
-              Reset demo data
+              Switch account
             </button>
           </li>
         </ul>
@@ -179,7 +143,7 @@ function ProfileMenu({ role }: { role: Role }) {
           <Avatar name={name} size="sm" />
           <span className="sr-only max-w-44 text-left leading-tight lg:not-sr-only lg:block">
             <span className="block truncate text-sm font-semibold">{name}</span>
-            <span className="block text-xs text-ink-3">{roleLabel[role]} · demo</span>
+            <span className="block text-xs text-ink-3">{roleLabel[role]}</span>
           </span>
           <ChevronDown aria-hidden className="hidden size-4 text-ink-3 sm:block" />
         </button>
@@ -190,16 +154,14 @@ function ProfileMenu({ role }: { role: Role }) {
           label: (
             <>
               <span className="block font-semibold">{name}</span>
-              <span className="block text-xs text-ink-3">{roleLabel[role]} · demo persona, not a real account</span>
+              <span className="block text-xs text-ink-3">{roleLabel[role]}</span>
             </>
           ),
         },
         { kind: 'separator' },
         { kind: 'link', label: 'Settings', to: role === 'owner' ? '/owner/settings' : '/contractor/settings', icon: <Settings aria-hidden className="size-4" /> },
-        { kind: 'link', label: 'Help & about this demo', to: '/help', icon: <CircleHelp aria-hidden className="size-4" /> },
-        { kind: 'action', label: 'Switch demo persona', onSelect: () => show('persona'), icon: <Repeat2 aria-hidden className="size-4" /> },
-        { kind: 'separator' },
-        { kind: 'action', label: 'Reset demo data', onSelect: () => show('reset'), tone: 'danger', icon: <RotateCcw aria-hidden className="size-4" /> },
+        { kind: 'link', label: 'Help', to: '/help', icon: <CircleHelp aria-hidden className="size-4" /> },
+        { kind: 'action', label: 'Switch account', onSelect: () => show('persona'), icon: <Repeat2 aria-hidden className="size-4" /> },
       ]}
     />
   );
@@ -215,7 +177,7 @@ function HeaderCount({ count }: { count: number }) {
   );
 }
 
-/** Signed-in application shell: demo banner, top bar, desktop sidebar, mobile bottom navigation. */
+/** Signed-in application shell: top bar, desktop sidebar, mobile bottom navigation. */
 export function AppShell() {
   const role = useActiveRole();
   const counts = useShellCounts();
@@ -234,7 +196,6 @@ export function AppShell() {
       <a href="#main" className="sr-only z-50 bg-ink px-3 py-2 text-paper focus:not-sr-only focus:fixed focus:top-2 focus:left-2">
         Skip to content
       </a>
-      <DemoBanner />
       <header className="sticky top-0 z-30 border-b border-line bg-paper/95 backdrop-blur-sm">
         <div className="mx-auto flex h-14 max-w-[90rem] items-center gap-2 px-2 sm:px-4">
           <Link to={roleHome[role]} className="flex min-h-11 items-center px-2" title={`${brand.name} — ${roleLabel[role]} home`}>
@@ -250,7 +211,7 @@ export function AppShell() {
             className="hidden min-h-11 items-center gap-1.5 rounded-sm px-3 text-sm font-medium text-ink-2 hover:bg-sunken hover:text-ink md:inline-flex"
           >
             <Repeat2 aria-hidden className="size-4" />
-            Switch persona
+            Switch account
           </button>
           <Link
             to="/messages"
@@ -285,10 +246,10 @@ export function AppShell() {
               ))}
             </ul>
           </nav>
-          <div className="mt-auto border-t border-line pt-4 text-sm text-ink-3">
-            <p>Local demo. Nothing you do here is sent anywhere.</p>
-            <Link to="/help" className="mt-1 inline-flex min-h-9 items-center font-semibold text-ink-2 underline underline-offset-2">
-              What this demo can’t do
+          <div className="mt-auto border-t border-line pt-3">
+            <Link to="/help" className="flex min-h-11 items-center gap-3 rounded-sm px-3 text-[0.9375rem] font-medium text-ink-2 hover:bg-sunken hover:text-ink">
+              <CircleHelp aria-hidden className="size-[1.125rem]" />
+              Help
             </Link>
           </div>
         </aside>

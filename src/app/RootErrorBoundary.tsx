@@ -5,11 +5,10 @@ import { brand } from '@/config/brand';
 function ErrorScreen({ title, detail }: { title: string; detail?: string }) {
   return (
     <div className="mx-auto max-w-xl px-4 py-16">
-      <p className="eyebrow">{brand.name} · demo</p>
+      <p className="eyebrow">{brand.name}</p>
       <h1 className="mt-2 text-2xl font-semibold">{title}</h1>
       <p className="mt-2 text-ink-2">
-        Your demo data is still stored in this browser. Try going back to the dashboard. If the problem keeps happening, resetting the
-        demo data restores the original sample scenario.
+        Your work is saved. Go back to the dashboard and try again. If it keeps happening, reset the app data from Help.
       </p>
       {detail ? <pre className="mt-4 overflow-x-auto border border-line bg-surface p-3 font-mono text-xs whitespace-pre-wrap text-ink-3">{detail}</pre> : null}
       <div className="mt-6 flex flex-wrap gap-2">
@@ -46,7 +45,7 @@ export class RootErrorBoundary extends Component<{ children: ReactNode }, { erro
   }
 
   override render() {
-    if (this.state.error) return <ErrorScreen title="The demo hit an unexpected error" detail={this.state.error.message} />;
+    if (this.state.error) return <ErrorScreen title="Something went wrong" detail={this.state.error.message} />;
     return this.props.children;
   }
 }

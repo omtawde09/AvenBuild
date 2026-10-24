@@ -1,6 +1,6 @@
 import { categoryLabel } from '@/data/categories';
 import { formatBudgetRange, formatDate } from '@/lib/format';
-import type { Budget, ContractorProfile, MaterialResponsibility, Project, PropertyType, StartPreference, VerificationStatus, Weekday } from '@/domain/types';
+import type { Budget, ContractorProfile, MaterialResponsibility, Project, PropertyType, StartPreference, Weekday } from '@/domain/types';
 
 export const propertyTypeLabel: Record<PropertyType, string> = {
   apartment: 'Apartment',
@@ -32,11 +32,6 @@ export const availabilityLabel: Record<ContractorProfile['availability']['status
   unavailable: 'Not taking new work',
 };
 
-export const verificationLabel: Record<VerificationStatus, string> = {
-  sample_demo: 'Sample verification · demo data',
-  pending_demo: 'Entered by you · not checked (demo)',
-  not_submitted: 'Not submitted',
-};
 
 export function budgetLabel(b: Budget): string {
   return b.kind === 'range' ? formatBudgetRange(b.minPaise, b.maxPaise) : 'Budget not disclosed';

@@ -36,12 +36,12 @@ test.describe('accessibility', () => {
     await page.keyboard.press('Enter');
     await expect(page.locator('#main')).toBeFocused();
 
-    const trigger = page.getByRole('button', { name: 'Switch persona' });
+    const trigger = page.getByRole('button', { name: 'Switch account' });
     await trigger.focus();
     const outline = await trigger.evaluate((el) => getComputedStyle(el).outlineStyle);
     expect(outline).not.toBe('none');
     await page.keyboard.press('Enter');
-    const dialog = page.getByRole('dialog', { name: 'Switch demo persona' });
+    const dialog = page.getByRole('dialog', { name: 'Switch account' });
     await expect(dialog).toBeVisible();
     for (let i = 0; i < 8; i += 1) {
       await page.keyboard.press('Tab');

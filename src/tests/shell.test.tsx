@@ -12,12 +12,12 @@ function renderAt(path: string) {
 }
 
 describe('app shell and persona selection', () => {
-  it('renders the landing page with both role entry points and the demo notice', () => {
+  it('renders the landing page with both role entry points and no demo wording', () => {
     renderAt('/');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Briefed clearly/);
     expect(screen.getByRole('link', { name: /Post a project/ })).toHaveAttribute('href', '/start?role=owner');
     expect(screen.getByRole('link', { name: /Find matching work/ })).toHaveAttribute('href', '/start?role=contractor');
-    expect(screen.getAllByText(/Demo mode/).length).toBeGreaterThan(0);
+    expect(document.body.textContent).not.toMatch(/\bdemo\b|sample data|fictional/i);
   });
 
   it('redirects guarded routes to persona selection and continues after choosing', async () => {
@@ -34,17 +34,17 @@ describe('app shell and persona selection', () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/owner'] });
     render(<RouterProvider router={router} />);
     expect(screen.getByRole('heading', { name: /This page is for Property Owners/ })).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: /Switch to Property Owner persona/ }));
-    expect(screen.getByRole('heading', { level: 1, name: /Good to see you, Meera/ })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: /Switch to property owner account/i }));
+    expect(screen.getByRole('heading', { level: 1, name: /Hi, Meera/ })).toBeInTheDocument();
   });
 
   it('reset requires confirmation and cancelling keeps the persona', async () => {
     renderAt('/start');
     await userEvent.click(screen.getByRole('button', { name: /Meera Kulkarni/ }));
-    const banner = screen.getAllByRole('button', { name: /Reset/ })[0];
-    if (!banner) throw new Error('reset button missing');
-    await userEvent.click(banner);
-    const dialog = screen.getByRole('dialog', { name: 'Reset demo data?' });
+    const help = createMemoryRouter(routes, { initialEntries: ['/help'] });
+    render(<RouterProvider router={help} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Reset app data' }));
+    const dialog = screen.getAllByRole('dialog', { name: 'Reset all data?' })[0]!;
     await userEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     expect(useDemoStore.getState().data.meta.activePersonaId).not.toBeNull();
   });

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { FormProvider, useFieldArray, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useBlocker, useNavigate, useSearchParams } from 'react-router';
@@ -17,6 +17,7 @@ import { FieldError, SelectField, TextArea, TextField } from '@/components/ui/Fi
 import { ConfirmDialog } from '@/components/ui/Dialog';
 import { Notice, Stepper } from '@/components/ui/Feedback';
 import { AttachmentList, FilePicker } from '@/components/domain/Attachments';
+import { CategoryIcon } from '@/components/domain/CategoryIcon';
 import { toast } from '@/components/ui/toast';
 import { formatBudgetRange, formatDate } from '@/lib/format';
 import { materialLabel, propertyTypeLabel, startPreferenceLabel, weekdayLabel } from '@/lib/labels';
@@ -26,20 +27,26 @@ import { draftInputFromValues, emptyValues, STEP_FIELDS, STEPS, stepOf, valuesFr
 
 const DEMO_CITIES = ['Pune', 'Pimpri-Chinchwad', 'Mumbai', 'Nashik', 'Bengaluru', 'Hyderabad'];
 
-function RadioCards({ name, options, legend, error, columns = 2 }: { name: keyof WizardValues; options: ReadonlyArray<{ value: string; label: string; hint?: string }>; legend: string; error?: string | undefined; columns?: 2 | 3 }) {
+function RadioCards({ name, options, legend, error, columns = 2 }: { name: keyof WizardValues; options: ReadonlyArray<{ value: string; label: string; hint?: string; icon?: ReactNode }>; legend: string; error?: string | undefined; columns?: 2 | 3 | 4 }) {
   const { register } = useFormContext<WizardValues>();
   return (
     <fieldset aria-invalid={error ? true : undefined}>
       <legend className="text-sm font-semibold">
         {legend} <span className="text-bad">*</span>
       </legend>
-      <div className={cn('mt-2 grid gap-2', columns === 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2')}>
+      <div className={cn('mt-2 grid gap-2', columns === 4 ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4' : columns === 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2')}>
         {options.map((o) => (
           <label
             key={o.value}
-            className="flex min-h-11 cursor-pointer items-start gap-2.5 rounded-sm border border-line-strong bg-surface px-3 py-2.5 has-checked:border-ink has-checked:bg-sunken has-focus-visible:outline-2 has-focus-visible:outline-brick"
+            className={cn(
+              'flex min-h-11 cursor-pointer gap-2.5 rounded-md border border-line-strong bg-surface px-3 py-2.5 has-checked:border-ink has-checked:bg-sunken has-focus-visible:outline-2 has-focus-visible:outline-brick',
+              o.icon ? 'flex-col items-start' : 'items-start',
+            )}
           >
-            <input type="radio" value={o.value} {...register(name)} className="mt-1 size-4 shrink-0 accent-brick" />
+            <span className="flex w-full items-center justify-between gap-2">
+              {o.icon ? <span className="text-ink-2">{o.icon}</span> : null}
+              <input type="radio" value={o.value} {...register(name)} className={cn('size-4 shrink-0 accent-brick', !o.icon && 'mt-1')} />
+            </span>
             <span className="min-w-0">
               <span className="block text-sm font-medium">{o.label}</span>
               {o.hint ? <span className="block text-xs text-ink-3">{o.hint}</span> : null}
@@ -59,11 +66,11 @@ function StepBasics() {
       <RadioCards
         name="category"
         legend="What kind of work is it?"
-        columns={3}
+        columns={4}
         error={errors.category?.message}
-        options={SERVICE_CATEGORY_IDS.map((id) => ({ value: id, label: serviceCategories[id].label, hint: serviceCategories[id].description }))}
+        options={SERVICE_CATEGORY_IDS.map((id) => ({ value: id, label: serviceCategories[id].label, icon: <CategoryIcon category={id} /> }))}
       />
-      <TextField label="Project title" required description="A short, specific title, e.g. “Terrace waterproofing for a 1,150 sq ft roof”." error={errors.title?.message} {...register('title')} maxLength={PROJECT_LIMITS.titleMax + 10} />
+      <TextField label="Project title" required placeholder="e.g. Terrace waterproofing, 1,150 sq ft" error={errors.title?.message} {...register('title')} maxLength={PROJECT_LIMITS.titleMax + 10} />
       <SelectField label="Property type" required error={errors.propertyType?.message} placeholder="Choose a property type" options={PROPERTY_TYPES.map((t) => ({ value: t, label: propertyTypeLabel[t] }))} {...register('propertyType')} />
     </div>
   );
@@ -78,7 +85,7 @@ function StepScope() {
       <TextArea
         label="Describe the work"
         required
-        description="What’s wrong or what you want built, sizes if known, and anything a contractor should see before quoting."
+        placeholder="What needs doing, sizes if you know them, anything a contractor should see first"
         error={errors.scope?.message}
         maxChars={PROJECT_LIMITS.scopeMax}
         currentLength={scope.length}
@@ -113,8 +120,8 @@ function StepLocation({ cities }: { cities: string[] }) {
   const { register, formState: { errors } } = useFormContext<WizardValues>();
   return (
     <div className="space-y-6">
-      <Notice tone="info">Only the city and locality are shown to contractors. Don’t enter your full street address.</Notice>
-      <SelectField label="City" required description="Contractors see leads in the cities they serve." error={errors.city?.message} placeholder="Choose a city" options={cities.map((c) => ({ value: c, label: c }))} {...register('city')} />
+      <Notice tone="info">Contractors only see the city and locality.</Notice>
+      <SelectField label="City" required error={errors.city?.message} placeholder="Choose a city" options={cities.map((c) => ({ value: c, label: c }))} {...register('city')} />
       <TextField label="Locality / area" required error={errors.locality?.message} {...register('locality')} autoComplete="off" />
       <TextField label="Nearby landmark" optional error={errors.landmark?.message} {...register('landmark')} autoComplete="off" />
     </div>
@@ -149,7 +156,7 @@ function StepBudget() {
       <RadioCards name="startPreference" legend="When should work start?" error={errors.startPreference?.message} options={START_PREFERENCES.map((s) => ({ value: s, label: startPreferenceLabel[s] }))} />
       {start === 'specific_date' ? <TextField type="date" label="Target start date" required error={errors.targetStartDate?.message} min={todayISO()} {...register('targetStartDate')} /> : null}
       <div className="grid gap-4 sm:grid-cols-[1fr_10rem]">
-        <TextField label="Expected duration" optional inputMode="numeric" description="If you know roughly how long it should take." error={errors.durationValue?.message} {...register('durationValue')} />
+        <TextField label="Expected duration" optional inputMode="numeric" error={errors.durationValue?.message} {...register('durationValue')} />
         <SelectField label="Unit" options={[{ value: 'days', label: 'Days' }, { value: 'weeks', label: 'Weeks' }]} {...register('durationUnit')} />
       </div>
     </div>
@@ -176,7 +183,7 @@ function StepSite() {
       </fieldset>
       <TextField label="Visiting hours" required placeholder="e.g. 10 am – 1 pm" error={errors.siteWindow?.message} {...register('siteWindow')} />
       <RadioCards name="material" legend="Who supplies materials?" error={errors.material?.message} columns={3} options={MATERIAL_RESPONSIBILITY.map((m) => ({ value: m, label: materialLabel[m] }))} />
-      <TextArea label="Access and site notes" optional description="Parking, lift access, working hours allowed by your society, pets — anything that affects the work." error={errors.accessNotes?.message} rows={4} {...register('accessNotes')} />
+      <TextArea label="Access and site notes" optional placeholder="Parking, lift access, allowed working hours…" error={errors.accessNotes?.message} rows={4} {...register('accessNotes')} />
     </div>
   );
 }
@@ -377,7 +384,6 @@ export function ProjectWizard({ project }: { project?: Project }) {
       <PageHeader
         title={project ? 'Continue your draft' : 'Post a project'}
         crumbs={[{ label: 'Projects', to: '/owner/projects' }, { label: project ? 'Edit draft' : 'New project' }]}
-        meta={<span>Drafts are private. Contractors only see the project after you publish it.</span>}
       >
         <Stepper steps={STEPS} current={step} className="mt-2" />
       </PageHeader>

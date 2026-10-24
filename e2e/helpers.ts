@@ -22,8 +22,8 @@ export function trackConsoleErrors(page: Page): string[] {
 
 export async function resetDemo(page: Page) {
   await page.goto('/help');
-  await page.getByRole('button', { name: 'Reset demo data' }).first().click();
-  await page.getByRole('dialog', { name: 'Reset demo data?' }).getByRole('button', { name: 'Reset demo data' }).click();
+  await page.getByRole('button', { name: 'Reset app data' }).first().click();
+  await page.getByRole('dialog', { name: 'Reset all data?' }).getByRole('button', { name: 'Reset data' }).click();
   await expect(page).toHaveURL(/\/start$/);
 }
 

@@ -7,7 +7,6 @@ import { SERVICE_CATEGORY_IDS, categoryLabel, categoryOptions } from '@/data/cat
 import type { UserId } from '@/domain/ids';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
-import { DemoLabel } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/Feedback';
 import { Checkbox, InlineSelect } from '@/components/ui/Field';
 import { ListToolbar, type ActiveFilter } from '@/components/ui/ListToolbar';
@@ -100,7 +99,7 @@ export function DiscoverPage() {
 
   return (
     <>
-      <PageHeader title="Find contractors" crumbs={[{ label: 'Home', to: '/owner' }, { label: 'Find contractors' }]} meta={<span>All profiles here are fictional demo businesses.</span>} />
+      <PageHeader title="Find contractors" crumbs={[{ label: 'Home', to: '/owner' }, { label: 'Find contractors' }]} />
       <ListToolbar
         query={f.q}
         onQuery={(q) => update({ q })}
@@ -133,7 +132,6 @@ export function DiscoverPage() {
                   <Link to={`/owner/contractors/${profile.userId}`} className="text-lg font-semibold underline-offset-2 hover:underline">
                     {profile.businessName}
                   </Link>
-                  {profile.isSeed ? <DemoLabel>Demo profile</DemoLabel> : null}
                 </div>
                 <RatingInline rating={rating} />
                 <p className="text-sm text-ink-2">{profile.services.map(categoryLabel).join(' · ')}</p>

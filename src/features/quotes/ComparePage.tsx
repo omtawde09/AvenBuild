@@ -11,7 +11,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
 import { Badge, StatusBadge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/Feedback';
-import { RatingInline, VerificationTag } from '@/components/domain/Reputation';
+import { RatingInline } from '@/components/domain/Reputation';
 import { RecordNotFound } from '@/features/public/NotFoundPage';
 import { formatDate, formatMoney, formatMoneyExact, formatNumber, unitLabel } from '@/lib/format';
 
@@ -141,11 +141,7 @@ export function ComparePage() {
             <p>
               {p.yearsExperience} yrs · team {p.teamSize} · {portfolio} portfolio
             </p>
-            {p.responseTimeSampleHours !== null ? <p className="text-ink-3">Replies ~{p.responseTimeSampleHours} h (sample)</p> : null}
-            <div className="flex flex-wrap gap-1">
-              <VerificationTag what="Licence" status={p.qualifications.licenceStatus} />
-              <VerificationTag what="GST" status={p.qualifications.gstStatus} />
-            </div>
+            {p.responseTimeSampleHours !== null ? <p className="text-ink-3">Replies in ~{p.responseTimeSampleHours} h</p> : null}
           </div>
         );
       },

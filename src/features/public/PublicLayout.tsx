@@ -1,7 +1,6 @@
 import { Link, Outlet } from 'react-router';
 import { brand } from '@/config/brand';
 import { ButtonLink } from '@/components/ui/Button';
-import { DemoBanner } from '@/components/layout/AppShell';
 import { DemoControlDialogs } from '@/components/layout/DemoControls';
 import { Wordmark } from '@/components/layout/Wordmark';
 import { useActiveRole } from '@/app/store/demoStore';
@@ -14,7 +13,6 @@ export function PublicLayout() {
       <a href="#main" className="sr-only z-50 bg-ink px-3 py-2 text-paper focus:not-sr-only focus:fixed focus:top-2 focus:left-2">
         Skip to content
       </a>
-      <DemoBanner />
       <header className="border-b border-line">
         <div className="container-page flex h-16 items-center gap-2">
           <Link to="/" className="-ml-2 flex min-h-11 items-center px-2" title={`${brand.name} home`}>
@@ -34,7 +32,7 @@ export function PublicLayout() {
               </li>
               <li>
                 <Link to="/help" className="inline-flex min-h-11 items-center px-3 hover:text-ink">
-                  About this demo
+                  Help
                 </Link>
               </li>
             </ul>
@@ -42,11 +40,11 @@ export function PublicLayout() {
           <div className="flex-1" />
           {role ? (
             <ButtonLink to={roleHome[role]} size="sm" variant="secondary">
-              Back to dashboard
+              Go to dashboard
             </ButtonLink>
           ) : (
             <ButtonLink to="/start" size="sm">
-              Try the demo
+              Get started
             </ButtonLink>
           )}
         </div>
@@ -54,24 +52,21 @@ export function PublicLayout() {
       <main id="main" tabIndex={-1} className="flex-1 outline-none">
         <Outlet />
       </main>
-      <footer className="border-t border-line bg-sunken/60">
-        <div className="container-page flex flex-col gap-4 py-8 text-sm text-ink-2 sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-md">
+      <footer className="border-t border-line">
+        <div className="container-page flex flex-col gap-3 py-6 text-sm text-ink-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
             <Wordmark />
-            <p className="mt-3">
-              {brand.name} is a working name for a demo prototype. All people, businesses, reviews and verification labels in it are
-              fictional sample data. No trademark clearance is implied.
-            </p>
+            <span className="text-ink-3">{brand.tagline}</span>
           </div>
           <ul className="flex flex-wrap gap-x-4">
             <li>
-              <Link to="/start" className="inline-flex min-h-11 items-center underline underline-offset-2">
-                Choose a demo persona
+              <Link to="/start" className="inline-flex min-h-11 items-center hover:text-ink">
+                Get started
               </Link>
             </li>
             <li>
-              <Link to="/help" className="inline-flex min-h-11 items-center underline underline-offset-2">
-                Help &amp; demo limitations
+              <Link to="/help" className="inline-flex min-h-11 items-center hover:text-ink">
+                Help
               </Link>
             </li>
           </ul>

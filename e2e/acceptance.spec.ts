@@ -265,7 +265,7 @@ test('H8 failure paths: no results, invalid input, empty messages, cancelled dia
   await page.evaluate(() => localStorage.setItem('avenbuild.demo', '{"schemaVersion":1,"data":{broken'));
   await page.goto('/start');
   await page.getByRole('button', { name: new RegExp(OWNER) }).click();
-  await expect(page.getByText(/Saved demo data in this browser was damaged/)).toBeVisible();
+  await expect(page.getByText(/Your saved data couldn’t be read/)).toBeVisible();
 
   // A full storage quota keeps the app working and says changes can't be saved.
   const quotaPage = page;
@@ -281,7 +281,7 @@ test('H8 failure paths: no results, invalid input, empty messages, cancelled dia
     (window as unknown as { __fillQuota?: boolean }).__fillQuota = true;
   });
   await quotaPage.getByRole('button', { name: 'Shortlisted' }).first().click();
-  await expect(quotaPage.getByText('Changes in this session can’t be saved in this browser.')).toBeVisible();
+  await expect(quotaPage.getByText('Your changes can’t be saved right now.')).toBeVisible();
 
   expect(errors, `console errors:\n${errors.join('\n')}`).toEqual([]);
 });

@@ -32,7 +32,7 @@ export function TotalsBlock({ content, className }: { content: Pick<QuoteContent
         <dd>{formatMoneyExact(totals.totalPaise)}</dd>
       </div>
     </dl>
-      <p className="mt-1.5 text-xs text-ink-3">Each line, the discount and the tax are rounded to the nearest paisa. Tax figures are demo inputs, not tax advice.</p>
+      <p className="mt-1.5 text-xs text-ink-3">Rounded to the nearest paisa.</p>
     </div>
   );
 }

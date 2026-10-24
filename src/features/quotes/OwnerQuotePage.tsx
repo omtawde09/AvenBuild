@@ -120,7 +120,7 @@ export function OwnerQuotePage() {
 
           {quote.history.length ? (
             <section aria-labelledby="history" className="mt-10">
-              <SectionHeading id="history" title="Earlier revisions" description="Previous versions stay on record; the current version is shown above." />
+              <SectionHeading id="history" title="Earlier revisions" />
               <ul className="mt-3 divide-y divide-line border-y border-line">
                 {[...quote.history].reverse().map((h) => {
                   const t = quoteTotal(h.content);
@@ -186,7 +186,6 @@ export function OwnerQuotePage() {
                 {otherLive.length} other {otherLive.length === 1 ? 'quote' : 'quotes'} will be declined and those contractors notified.
               </p>
             ) : null}
-            <p className="mt-2 text-ink-3">No payment is taken in this demo.</p>
           </>
         }
         confirmLabel="Accept and create workspace"

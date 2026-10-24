@@ -38,10 +38,10 @@ interface DemoStore {
 }
 
 const recoveryText: Record<Exclude<LoadResult, { kind: 'ok' } | { kind: 'empty' }>['reason'], string> = {
-  malformed: 'Saved demo data in this browser was damaged',
-  invalid: 'Saved demo data in this browser didn’t match the expected format',
-  unknown_version: 'Saved demo data came from a different version of this demo',
-  unavailable: 'This browser isn’t allowing the demo to read saved data',
+  malformed: 'Your saved data couldn’t be read',
+  invalid: 'Your saved data was in an unexpected format',
+  unknown_version: 'Your saved data came from a different app version',
+  unavailable: 'This browser is blocking saved data',
 };
 
 function freshSeed(): DemoState {
@@ -54,11 +54,12 @@ function initialState(): { data: DemoState; notices: StorageNotice[] } {
   const data = freshSeed();
   const notices: StorageNotice[] = [];
   if (loaded.kind === 'recovered') {
+    console.warn('Saved data recovery:', loaded.detail);
     notices.push({
       id: 'recovered',
       tone: 'warn',
-      title: `${recoveryText[loaded.reason]}, so the original sample data was restored.`,
-      body: loaded.detail,
+      title: `${recoveryText[loaded.reason]}, so the app was reset.`,
+      body: '',
     });
   }
   const saved = deps.adapter.save(data);
@@ -70,11 +71,11 @@ function saveFailedNotice(reason: 'quota' | 'unavailable'): StorageNotice {
   return {
     id: 'save_failed',
     tone: 'error',
-    title: 'Changes in this session can’t be saved in this browser.',
+    title: 'Your changes can’t be saved right now.',
     body:
       reason === 'quota'
-        ? 'Browser storage is full. The demo keeps working, but your changes will be lost when you refresh. Resetting the demo data may free space.'
-        : 'Browser storage is unavailable (for example in some private windows). The demo keeps working, but changes will be lost when you refresh.',
+        ? 'Browser storage is full. Keep working, but changes will be lost when you refresh.'
+        : 'Browser storage is turned off (for example in some private windows). Changes will be lost when you refresh.',
   };
 }
 
@@ -86,7 +87,7 @@ export const useDemoStore = create<DemoStore>((set, get) => ({
   run: (command) => {
     const { data } = get();
     const actorId = data.meta.activePersonaId;
-    if (!actorId) return fail('FORBIDDEN', 'Choose a demo persona first.');
+    if (!actorId) return fail('FORBIDDEN', 'Choose an account first.');
     const now = deps.clock();
     const ctx: CommandContext = { actorId, now: now.toISOString(), today: toISODate(now), newId: deps.newId };
     let result: CommandResult<unknown>;

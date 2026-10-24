@@ -289,7 +289,7 @@ export function ProjectDetailPage() {
           command((s, c) => closeProject(s, id, reason, c), { success: 'Project closed.' });
         }}
       >
-        <TextArea label="Reason" optional rows={3} value={reason} onChange={(e) => setReason(e.target.value)} description="Shown to you only, in the project record." />
+        <TextArea label="Reason" optional rows={3} value={reason} onChange={(e) => setReason(e.target.value)} />
       </ConfirmDialog>
       <ConfirmDialog
         open={dialog === 'cancel'}

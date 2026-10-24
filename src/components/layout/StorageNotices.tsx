@@ -2,7 +2,7 @@ import { useDemoStore } from '@/app/store/demoStore';
 import { Notice } from '@/components/ui/Feedback';
 import { Button } from '@/components/ui/Button';
 
-/** Non-blocking explanations when stored demo data was recovered or can't be saved. */
+/** Non-blocking messages when saved data was recovered or can't be saved. */
 export function StorageNotices() {
   const notices = useDemoStore((s) => s.notices);
   const dismiss = useDemoStore((s) => s.dismissNotice);

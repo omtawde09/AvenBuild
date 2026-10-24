@@ -92,16 +92,3 @@ export function StatusBadge(props: StatusBadgeProps & { className?: string }) {
   );
 }
 
-/** Labels content that is sample/demo data rather than a verified fact. */
-export function DemoLabel({ children = 'Demo data', className }: { children?: ReactNode; className?: string }) {
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center rounded-xs border border-dashed border-ink-3/60 px-1.5 py-0.5 font-mono text-[0.6875rem] leading-4 tracking-wide text-ink-3 uppercase',
-        className,
-      )}
-    >
-      {children}
-    </span>
-  );
-}

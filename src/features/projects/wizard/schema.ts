@@ -75,7 +75,7 @@ export function wizardSchema(today: string) {
         const max = parseRupeesToPaise(v.budgetMax);
         if (min === null || min <= 0) ctx.addIssue({ code: 'custom', path: ['budgetMin'], message: 'Enter a minimum in rupees, e.g. 120000.' });
         if (max === null || max <= 0) ctx.addIssue({ code: 'custom', path: ['budgetMax'], message: 'Enter a maximum in rupees, e.g. 180000.' });
-        else if (max > L.budgetMaxPaise) ctx.addIssue({ code: 'custom', path: ['budgetMax'], message: 'That’s larger than this demo supports (₹100 crore).' });
+        else if (max > L.budgetMaxPaise) ctx.addIssue({ code: 'custom', path: ['budgetMax'], message: 'That’s above the ₹100 crore limit.' });
         else if (min !== null && max < min) ctx.addIssue({ code: 'custom', path: ['budgetMax'], message: 'Maximum must be at least the minimum.' });
       }
       if (v.startPreference === 'specific_date') {

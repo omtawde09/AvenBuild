@@ -1,5 +1,7 @@
 # AvenBuild — Acceptance Checklist
 
+> **2026-10-25:** at the owner's request the app no longer presents itself as a demo (no banner, no “sample/demo” labels). The technical limits in `demo-limitations-and-backend-replacement.md` still apply.
+
 **Status:** Phase 7 results · **Last run:** 2026-10-24
 An item is **Pass** only when it was actually executed: by an automated test (file named) or a manual check (described). Items that were implemented but not exercised are marked **Not run**.
 
@@ -21,12 +23,12 @@ Result values: `Pass (auto: <file>)` · `Pass (manual: <how>)` · `Fail: <note>`
 |---|---|---|
 | A1 | Exactly two personas; no admin role or route | Pass (auto: `src/tests/shell.test.tsx`; manual: route table in `src/app/router.tsx` has only public/owner/contractor/shared routes) |
 | A2 | No backend, API client or external data request | Pass (manual: source grep finds no `fetch`, `XMLHttpRequest`, `axios`, `WebSocket` or `http(s)://` URLs in `src/`; fonts are self-hosted) |
-| A3 | Demo banner on every shell screen, linking to About and Reset | Pass (auto: `shell.test.tsx`, `e2e/helpers.ts` resets via the banner/Help) |
-| A4 | Persona selector isn’t described as sign-in or security | Pass (manual: `/start` copy reviewed — “This is not a sign-in”) |
-| A5 | Seeded profiles show “Sample verification · demo data”; user-entered fields “Not submitted” / “not checked”; never plain “Verified” | Pass (auto: `src/tests/domain/storage.test.ts`, `matching.test.ts`) |
+| A3 | Demo banner on every shell screen, linking to About and Reset | Changed 2026-10-25 by product decision: demo wording removed from the UI (no banner; reset lives in Help and Settings) |
+| A4 | Persona selector isn’t described as sign-in or security | Changed 2026-10-25 by product decision: demo wording removed from the UI (account chooser: “Welcome to AvenBuild”) |
+| A5 | Seeded profiles show “Sample verification · demo data”; user-entered fields “Not submitted” / “not checked”; never plain “Verified” | Changed 2026-10-25 by product decision: demo wording removed from the UI. Verification badges were removed rather than relabelled, so the UI makes no verification claim |
 | A6 | No payment, card or bank inputs; milestone values say no payment is processed | Pass (manual: source grep; milestone tab copy) |
 | A7 | File features say files aren’t uploaded and previews don’t survive refresh | Pass (manual: Documents tab, file picker and attachment rows in the browser) |
-| A8 | `/help` lists every limitation | Pass (manual: Help page content) |
+| A8 | `/help` lists every limitation | Changed 2026-10-25 by product decision: demo wording removed from the UI (Help is now a how-to and FAQ) |
 | A9 | No real-looking names, phones, emails, addresses in seed | Pass (auto: `storage.test.ts`) |
 
 ## B. Persistence and recovery

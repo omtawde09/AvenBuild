@@ -7,7 +7,7 @@ import { CONTRACTOR_PERSONA_ID, OWNER_PERSONA_ID } from '@/data/personas';
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { toast } from '@/components/ui/toast';
 
-/** Redirects to persona selection when no demo persona is active. */
+/** Redirects to the account chooser when no account is active. */
 export function RequirePersona({ children }: { children?: ReactNode }) {
   const role = useActiveRole();
   const location = useLocation();
@@ -26,22 +26,21 @@ export function RequireRole({ role }: { role: Role }) {
   if (active === role) return <Outlet />;
   return (
     <section className="max-w-xl py-8" aria-labelledby="wrong-role">
-      <p className="eyebrow">Different persona needed</p>
       <h1 id="wrong-role" className="mt-2 text-2xl font-semibold">
         This page is for {roleLabel[role]}s
       </h1>
       <p className="mt-2 text-ink-2">
-        You’re viewing the demo as a {roleLabel[active]}. Switch persona to see this page — both personas share the same local demo data.
+        You’re signed in as a {roleLabel[active].toLowerCase()}. Switch account to open this page.
       </p>
       <div className="mt-5 flex flex-wrap gap-2">
         <Button
           icon={<Repeat2 aria-hidden className="size-4" />}
           onClick={() => {
             setPersona(role === 'owner' ? OWNER_PERSONA_ID : CONTRACTOR_PERSONA_ID);
-            toast.info(`Now viewing as the ${roleLabel[role]} persona.`);
+            toast.info(`Switched to your ${roleLabel[role].toLowerCase()} account.`);
           }}
         >
-          Switch to {roleLabel[role]} persona
+          Switch to {roleLabel[role].toLowerCase()} account
         </Button>
         <ButtonLink to={roleHome[active]} variant="secondary">
           Go to my dashboard

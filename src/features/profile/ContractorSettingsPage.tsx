@@ -75,7 +75,7 @@ export function ContractorSettingsPage() {
 
   return (
     <>
-      <PageHeader title="Settings" crumbs={[{ label: 'Home', to: '/contractor' }, { label: 'Settings' }]} meta={<span>Visibility, availability, quote defaults and notifications.</span>} />
+      <PageHeader title="Settings" crumbs={[{ label: 'Home', to: '/contractor' }, { label: 'Settings' }]} />
       <form
         noValidate
         className="grid max-w-2xl gap-10"
@@ -113,10 +113,10 @@ export function ContractorSettingsPage() {
         </section>
 
         <section aria-labelledby="quote-defaults" className="grid gap-4">
-          <SectionHeading id="quote-defaults" title="Quote defaults" description="Pre-filled into every new quote. You can change them per quote." />
+          <SectionHeading id="quote-defaults" title="Quote defaults" description="Pre-filled in new quotes." />
           <div className="grid gap-4 sm:grid-cols-2">
             <TextField label="Price valid for (days)" inputMode="numeric" value={form.validityDays} error={errors['quoteDefaults.validityDays']} onChange={(e) => setForm({ ...form, validityDays: e.target.value })} />
-            <TextField label={`${localeConfig.taxLabel} (%)`} inputMode="decimal" description="Demo input only — not tax advice." value={form.taxPercent} error={errors['quoteDefaults.taxPercent']} onChange={(e) => setForm({ ...form, taxPercent: e.target.value })} />
+            <TextField label={`${localeConfig.taxLabel} (%)`} inputMode="decimal" value={form.taxPercent} error={errors['quoteDefaults.taxPercent']} onChange={(e) => setForm({ ...form, taxPercent: e.target.value })} />
           </div>
           <TextArea label="Standard inclusions" description="One per line." rows={4} value={form.inclusions} onChange={(e) => setForm({ ...form, inclusions: e.target.value })} />
           <TextArea label="Standard exclusions" description="One per line." rows={4} value={form.exclusions} onChange={(e) => setForm({ ...form, exclusions: e.target.value })} />

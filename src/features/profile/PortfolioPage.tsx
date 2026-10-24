@@ -12,7 +12,6 @@ import { Button } from '@/components/ui/Button';
 import { ConfirmDialog, Dialog } from '@/components/ui/Dialog';
 import { EmptyState } from '@/components/ui/Feedback';
 import { SelectField, TextArea, TextField } from '@/components/ui/Field';
-import { DemoLabel } from '@/components/ui/Badge';
 import { AttachmentList, AttachmentThumb, FilePicker } from '@/components/domain/Attachments';
 import { formatBudgetRange, formatMonthYear } from '@/lib/format';
 
@@ -80,7 +79,6 @@ function PortfolioDialog({ open, onClose, editing }: { open: boolean; onClose: (
       onClose={onClose}
       size="lg"
       title={editing ? 'Edit portfolio entry' : 'Add portfolio entry'}
-      description="Describe completed work owners can relate to. In this demo, photos are previews only and aren’t uploaded."
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
@@ -126,7 +124,6 @@ export function PortfolioPage() {
       <PageHeader
         title="Portfolio"
         crumbs={[{ label: 'Home', to: '/contractor' }, { label: 'Portfolio' }]}
-        meta={<span>Past work shown on your public profile. Three or more entries with photos makes your profile complete.</span>}
         actions={
           <Button icon={<Plus aria-hidden className="size-4" />} onClick={() => setEditing('new')}>
             Add entry
@@ -149,7 +146,6 @@ export function PortfolioPage() {
                   {p.approxValue ? ` · ${formatBudgetRange(p.approxValue.minPaise, p.approxValue.maxPaise)}` : ''}
                 </p>
                 <p className="line-clamp-3 text-sm">{p.description}</p>
-                {p.isSeed ? <DemoLabel className="self-start">Sample entry</DemoLabel> : null}
                 <div className="mt-auto flex gap-2 pt-3">
                   <Button size="sm" variant="secondary" icon={<Pencil aria-hidden className="size-4" />} onClick={() => setEditing(p)}>
                     Edit

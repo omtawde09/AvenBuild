@@ -79,7 +79,7 @@ export function ReviewTab() {
           </dl>
           <p className="mt-3">{existing.text}</p>
         </div>
-        <p className="mt-3 text-sm text-ink-3">Reviews can’t be edited or duplicated in this demo. {role === 'owner' ? <Link to={`/owner/contractors/${ws.contractorId}`} className="font-semibold underline underline-offset-2">See it on {contractor}’s profile</Link> : null}</p>
+        <p className="mt-3 text-sm text-ink-3">Reviews can’t be edited. {role === 'owner' ? <Link to={`/owner/contractors/${ws.contractorId}`} className="font-semibold underline underline-offset-2">See it on {contractor}’s profile</Link> : null}</p>
       </section>
     );
   }

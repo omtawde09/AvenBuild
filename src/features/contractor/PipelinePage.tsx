@@ -44,7 +44,7 @@ export function PipelinePage() {
 
   return (
     <>
-      <PageHeader title="Quotes & pipeline" crumbs={[{ label: 'Home', to: '/contractor' }, { label: 'Quotes' }]} meta={<span>Every lead you’ve saved, been invited to or quoted on.</span>} />
+      <PageHeader title="Quotes & pipeline" crumbs={[{ label: 'Home', to: '/contractor' }, { label: 'Quotes' }]} />
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <InlineSelect
           aria-label="Filter by stage"

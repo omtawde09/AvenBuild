@@ -209,7 +209,7 @@ export const InlineSelect = forwardRef<
   SelectHTMLAttributes<HTMLSelectElement> & { options: ReadonlyArray<Option>; 'aria-label': string }
 >(function InlineSelect({ options, className, ...rest }, ref) {
   return (
-    <select ref={ref} className={cn(controlClasses, 'w-auto pr-8', className)} {...rest}>
+    <select ref={ref} className={cn(controlClasses.replace('w-full ', ''), 'w-auto pr-8', className)} {...rest}>
       {options.map((o) => (
         <option key={o.value} value={o.value}>
           {o.label}

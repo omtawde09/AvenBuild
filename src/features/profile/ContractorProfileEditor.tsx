@@ -12,9 +12,8 @@ import { paiseToRupeeInput, parseRupeesToPaise } from '@/domain/money';
 import { PageHeader, StickyActions } from '@/components/layout/PageHeader';
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { Checkbox, FieldError, SelectField, TextArea, TextField } from '@/components/ui/Field';
-import { Notice, SectionHeading } from '@/components/ui/Feedback';
-import { DemoLabel } from '@/components/ui/Badge';
-import { RatingBreakdown, VerificationTag } from '@/components/domain/Reputation';
+import { SectionHeading } from '@/components/ui/Feedback';
+import { RatingBreakdown } from '@/components/domain/Reputation';
 import { availabilityLabel } from '@/lib/labels';
 import { formatDate } from '@/lib/format';
 
@@ -108,7 +107,6 @@ export function ContractorProfileEditor() {
       <PageHeader
         title="Business profile"
         crumbs={[{ label: 'Home', to: '/contractor' }, { label: 'Profile' }]}
-        meta={profile.isSeed ? <DemoLabel>Demo profile · fictional business</DemoLabel> : null}
         actions={
           <ButtonLink to="/contractor/portfolio" variant="secondary">
             Manage portfolio
@@ -122,7 +120,7 @@ export function ContractorProfileEditor() {
             <TextField label="Business name" required error={errors.businessName} {...register('businessName')} />
             <TextField label="Contact person" required error={errors.contactName} {...register('contactName')} />
           </div>
-          <TextArea label="About your business" required rows={5} description="What you specialise in and how you work." error={errors.bio} maxChars={1200} currentLength={bio.length} {...register('bio')} />
+          <TextArea label="About your business" required rows={5} error={errors.bio} maxChars={1200} currentLength={bio.length} {...register('bio')} />
           <div className="grid gap-4 sm:grid-cols-2">
             <TextField label="Years of experience" required inputMode="numeric" error={errors.yearsExperience} {...register('yearsExperience')} />
             <TextField label="Team size" required inputMode="numeric" error={errors.teamSize} {...register('teamSize')} />
@@ -130,7 +128,7 @@ export function ContractorProfileEditor() {
         </section>
 
         <section aria-labelledby="services" className="grid gap-4">
-          <SectionHeading id="services" title="Services" description="You’ll only see leads in these categories, and owners can filter by them." />
+          <SectionHeading id="services" title="Services" description="Your leads and search listing use these." />
           <fieldset aria-invalid={errors.services ? true : undefined}>
             <legend className="sr-only">Services you offer</legend>
             <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -146,7 +144,7 @@ export function ContractorProfileEditor() {
         </section>
 
         <section aria-labelledby="areas" className="grid gap-4">
-          <SectionHeading id="areas" title="Service areas" description="Leads must be in one of these cities. Localities are optional and shown as a stronger match." />
+          <SectionHeading id="areas" title="Service areas" description="Cities you work in. Localities are optional." />
           <ul className="space-y-3">
             {areas.fields.map((f, i) => (
               <li key={f.id} className="grid gap-2 border border-line bg-surface p-3 sm:grid-cols-[12rem_1fr_auto] sm:items-start">
@@ -177,18 +175,13 @@ export function ContractorProfileEditor() {
         </section>
 
         <section aria-labelledby="credentials" className="grid gap-4">
-          <SectionHeading id="credentials" title="Licence and GST (optional sample fields)" />
-          <Notice tone="info">
-            Nothing you enter here is checked. Owners will see “Entered by you · not checked (demo)”. Don’t enter real registration numbers in this demo.
-          </Notice>
+          <SectionHeading id="credentials" title="Licence and GST" description="Optional." />
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <TextField label="Licence or registration number" optional error={errors['qualifications.licenceNumber']} {...register('licenceNumber')} />
-              <VerificationTag what="Licence" status={profile.qualifications.licenceStatus} />
             </div>
             <div className="space-y-2">
-              <TextField label="GSTIN (sample format)" optional error={errors['qualifications.gstNumber']} {...register('gstNumber')} />
-              <VerificationTag what="GST" status={profile.qualifications.gstStatus} />
+              <TextField label="GSTIN" optional error={errors['qualifications.gstNumber']} {...register('gstNumber')} />
             </div>
           </div>
         </section>
@@ -205,7 +198,7 @@ export function ContractorProfileEditor() {
       </form>
 
       <section id="reviews" aria-labelledby="reviews-heading" className="mt-14 max-w-3xl scroll-mt-20">
-        <SectionHeading id="reviews-heading" title="Your reviews" description="Owners can review you once per completed project. Ratings are calculated from these records." />
+        <SectionHeading id="reviews-heading" title="Your reviews" />
         <div className="mt-4">
           <RatingBreakdown rating={rating} />
         </div>
@@ -219,7 +212,6 @@ export function ContractorProfileEditor() {
                   <span className="text-ink-3">
                     · {r.reviewerLabel} · {formatDate(r.createdAt)}
                   </span>
-                  {r.isSeed ? <DemoLabel>Sample review</DemoLabel> : null}
                 </p>
                 <p className="mt-1">{r.text}</p>
               </li>
