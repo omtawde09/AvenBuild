@@ -162,7 +162,7 @@ function MoreSheet({ role, open, onClose }: { role: Role; open: boolean; onClose
 }
 
 function ProfileMenu({ role }: { role: Role }) {
-  const activeId = useDemoStore((s) => s.activePersonaId);
+  const activeId = useDemoStore((s) => s.data.meta.activePersonaId);
   const show = useDemoDialogs((s) => s.show);
   const persona = personaCards.find((p) => p.id === activeId);
   const name = persona?.name ?? roleLabel[role];

@@ -22,12 +22,17 @@ export default tseslint.config(
       'no-restricted-globals': [
         'error',
         { name: 'localStorage', message: 'Use the storage adapter in src/lib/storage.' },
+        { name: 'sessionStorage', message: 'Use the storage adapter in src/lib/storage.' },
+      ],
+      'no-restricted-properties': [
+        'error',
+        { object: 'window', property: 'localStorage', message: 'Use the storage adapter in src/lib/storage.' },
       ],
     },
   },
   {
     files: ['src/lib/storage/**', 'src/tests/**', 'e2e/**'],
-    rules: { 'no-restricted-globals': 'off' },
+    rules: { 'no-restricted-globals': 'off', 'no-restricted-properties': 'off' },
   },
   {
     files: ['e2e/**', '*.config.ts'],

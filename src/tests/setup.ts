@@ -1,6 +1,11 @@
 import '@testing-library/jest-dom/vitest';
-import { afterEach } from 'vitest';
+import { afterEach, beforeEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
+import { initDemoStore } from '@/app/store/demoStore';
+import { sequentialIdFactory } from '@/domain/ids';
+import { createMemoryAdapter } from '@/lib/storage/memoryAdapter';
+import { useToastStore } from '@/components/ui/toast';
+import { TEST_NOW } from './helpers';
 
 // jsdom does not implement <dialog> modality; provide the minimal behaviour our Dialog relies on.
 if (typeof HTMLDialogElement !== 'undefined' && !HTMLDialogElement.prototype.showModal) {
@@ -29,6 +34,11 @@ if (!window.matchMedia) {
 
 window.scrollTo = () => undefined;
 Element.prototype.scrollIntoView = function scrollIntoView() {};
+
+beforeEach(() => {
+  initDemoStore({ adapter: createMemoryAdapter(), clock: () => TEST_NOW, newId: sequentialIdFactory() });
+  useToastStore.getState().clear();
+});
 
 afterEach(() => {
   cleanup();

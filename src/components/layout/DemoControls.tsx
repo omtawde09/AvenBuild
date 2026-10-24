@@ -49,7 +49,7 @@ export function PersonaList({ onChoose, activeId }: { onChoose: (id: (typeof per
 export function DemoControlDialogs() {
   const open = useDemoDialogs((s) => s.open);
   const show = useDemoDialogs((s) => s.show);
-  const activeId = useDemoStore((s) => s.activePersonaId);
+  const activeId = useDemoStore((s) => s.data.meta.activePersonaId);
   const setPersona = useDemoStore((s) => s.setPersona);
   const resetDemo = useDemoStore((s) => s.resetDemo);
   const navigate = useNavigate();

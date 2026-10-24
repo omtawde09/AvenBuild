@@ -12,7 +12,7 @@ import { Notice } from '@/components/ui/Feedback';
 export function StartPage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const activeId = useDemoStore((s) => s.activePersonaId);
+  const activeId = useDemoStore((s) => s.data.meta.activePersonaId);
   const setPersona = useDemoStore((s) => s.setPersona);
   const hintRole = params.get('role');
   const next = params.get('next');

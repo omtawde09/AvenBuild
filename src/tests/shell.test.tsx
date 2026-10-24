@@ -12,8 +12,6 @@ function renderAt(path: string) {
 }
 
 describe('app shell and persona selection', () => {
-  beforeEach(() => useDemoStore.getState().resetDemo());
-
   it('renders the landing page with both role entry points and the demo notice', () => {
     renderAt('/');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Briefed clearly/);
@@ -48,7 +46,7 @@ describe('app shell and persona selection', () => {
     await userEvent.click(banner);
     const dialog = screen.getByRole('dialog', { name: 'Reset demo data?' });
     await userEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
-    expect(useDemoStore.getState().activePersonaId).not.toBeNull();
+    expect(useDemoStore.getState().data.meta.activePersonaId).not.toBeNull();
   });
 });
 
