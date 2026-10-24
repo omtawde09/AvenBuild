@@ -20,7 +20,11 @@ npm run lint         # ESLint
 npm run test         # unit + component tests (Vitest)
 npm run build        # production build to dist/
 npm run check        # all of the above in sequence
+npm run e2e          # Playwright: acceptance (375px), responsive (8 widths) and accessibility suites
 ```
+
+End-to-end tests use the Microsoft Edge already installed on the machine (`PW_CHANNEL=chrome` to use Chrome instead),
+so no browser download is needed. They build the app and serve it with `vite preview` on port 4174.
 
 ## Using the demo
 
@@ -34,3 +38,7 @@ npm run check        # all of the above in sequence
 - `docs/architecture.md` — layers, storage adapter, state machines, build order
 - `docs/ux-and-route-map.md` — routes and navigation
 - `docs/acceptance-checklist.md` — acceptance criteria and their verified status
+- `docs/manual-test-guide.md` — demo script, failure-path and accessibility checks, reset steps
+- `docs/demo-limitations-and-backend-replacement.md` — what is simulated, what must never ship, backend seams, next tasks
+- `docs/data-model-and-api-contract.md` — entities, constraints and the proposed API
+- `docs/mobile-roadmap.md` — what can be shared with a future React Native / Expo app
