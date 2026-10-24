@@ -34,9 +34,11 @@ export function AttachmentList({
   empty = 'No files attached.',
   className,
   meta,
+  canRemove,
 }: {
   files: ReadonlyArray<AttachmentMeta>;
   onRemove?: (file: AttachmentMeta) => void;
+  canRemove?: (file: AttachmentMeta) => boolean;
   empty?: string;
   className?: string;
   meta?: (file: AttachmentMeta) => React.ReactNode;
@@ -55,7 +57,7 @@ export function AttachmentList({
             </p>
             <p className="text-xs text-ink-3">{previewNote(f)}</p>
           </div>
-          {onRemove ? (
+          {onRemove && (canRemove?.(f) ?? true) ? (
             <button
               type="button"
               onClick={() => onRemove(f)}

@@ -47,6 +47,10 @@ export function sendMessage(state: DemoState, conversationId: ConversationId, bo
   const project = state.projects[c.projectId];
   const sender = ctx.actorId === c.contractorId ? (state.contractorProfiles[c.contractorId]?.businessName ?? 'Contractor') : (state.users[c.ownerId]?.displayName ?? 'Owner');
   const recipient = ctx.actorId === c.ownerId ? c.contractorId : c.ownerId;
+  if (c.kind === 'project') {
+    const ws = Object.values(state.workspaces).find((w) => w.projectId === c.projectId && w.contractorId === c.contractorId);
+    tx.log({ projectId: c.projectId, workspaceId: ws?.id ?? null, type: 'message_sent', summary: `Message from ${sender}` });
+  }
   tx.notify({ recipientId: recipient, category: 'message', title: `New message from ${sender}`, body: `${project?.title ?? 'Project'}: ${body.trim().slice(0, 140)}`, link: links.conversation(conversationId) });
   return tx.done(id);
 }
