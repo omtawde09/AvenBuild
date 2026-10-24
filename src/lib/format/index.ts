@@ -6,19 +6,20 @@ import type { Paise } from '@/domain/types';
  */
 const { locale, currency, currencyMinorUnitsPerMajor: minor } = localeConfig;
 
-const moneyFmt = new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const moneyWholeFmt = new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 0, maximumFractionDigits: 0 });
 const moneyExactFmt = new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const numberFmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 });
-const plainFmt = new Intl.NumberFormat(locale, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const plainFmt = new Intl.NumberFormat(locale, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+const plainExactFmt = new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const dateFmt = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', year: 'numeric' });
 const shortDateFmt = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
 const dateTimeFmt = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
 const timeFmt = new Intl.DateTimeFormat(locale, { hour: 'numeric', minute: '2-digit' });
 const monthYearFmt = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' });
 
-/** ₹1,23,456 or ₹1,23,456.5 (drops trailing zero paise). */
+/** ₹1,23,456 for whole rupees, ₹1,23,456.50 when there are paise. */
 export function formatMoney(paise: Paise): string {
-  return moneyFmt.format(paise / minor);
+  return paise % minor === 0 ? moneyWholeFmt.format(paise / minor) : moneyExactFmt.format(paise / minor);
 }
 
 /** ₹1,23,456.00 — always two decimals (quotes and totals). */
@@ -28,7 +29,7 @@ export function formatMoneyExact(paise: Paise): string {
 
 /** 1,23,456 without currency symbol (for summaries that already say ₹). */
 export function formatPaisePlain(paise: Paise): string {
-  return plainFmt.format(paise / minor);
+  return paise % minor === 0 ? plainFmt.format(paise / minor) : plainExactFmt.format(paise / minor);
 }
 
 /** Compact range for budgets: "₹1.2–1.8 lakh", "₹25,000–80,000", "₹1.5–2 crore". */

@@ -39,7 +39,9 @@ export function Notice({
   children,
   action,
   className,
+  id,
 }: {
+  id?: string;
   tone?: 'info' | 'warn' | 'error';
   title?: ReactNode;
   children?: ReactNode;
@@ -53,7 +55,7 @@ export function Notice({
     error: 'border-bad/30 bg-bad-tint text-bad',
   } as const;
   return (
-    <div role={tone === 'error' ? 'alert' : undefined} className={cn('flex gap-3 rounded-sm border px-3 py-3', tones[tone], className)}>
+    <div id={id} role={tone === 'error' ? 'alert' : undefined} className={cn('flex gap-3 rounded-sm border px-3 py-3', tones[tone], className)}>
       <Icon aria-hidden className="mt-0.5 size-5 shrink-0" />
       <div className="min-w-0 flex-1 text-sm text-ink">
         {title ? <p className="font-semibold">{title}</p> : null}
