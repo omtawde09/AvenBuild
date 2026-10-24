@@ -1,7 +1,6 @@
 import { createBrowserRouter, type RouteObject } from 'react-router';
 import { RootLayout } from './RootLayout';
 import { AppShell } from '@/components/layout/AppShell';
-import { PhasePlaceholder } from '@/components/layout/PhasePlaceholder';
 import { PublicLayout } from '@/features/public/PublicLayout';
 import { LandingPage } from '@/features/public/LandingPage';
 import { StartPage } from '@/features/public/StartPage';
@@ -35,10 +34,11 @@ import { ChangesTab } from '@/features/workspace/ChangesTab';
 import { ActivityTab } from '@/features/workspace/ActivityTab';
 import { MessagesPage } from '@/features/messages/MessagesPage';
 import { NotificationsPage } from '@/features/notifications/NotificationsPage';
+import { ReviewTab } from '@/features/workspace/ReviewTab';
+import { OwnerSettingsPage } from '@/features/profile/OwnerSettingsPage';
+import { ContractorSettingsPage } from '@/features/profile/ContractorSettingsPage';
 import { RequirePersona, RequireRole } from './guards';
 import { RouteErrorScreen } from './RootErrorBoundary';
-
-const p = (title: string, phase: number, description: string) => <PhasePlaceholder title={title} phase={phase} description={description} />;
 
 export const routes: RouteObject[] = [
   {
@@ -71,7 +71,7 @@ export const routes: RouteObject[] = [
               { path: 'contractors', element: <DiscoverPage /> },
               { path: 'contractors/:contractorId', element: <ContractorProfilePage /> },
               { path: 'shortlist', element: <ShortlistPage /> },
-              { path: 'settings', element: p('Settings', 6, 'Profile, contact and notification preferences.') },
+              { path: 'settings', element: <OwnerSettingsPage /> },
             ],
           },
           {
@@ -86,7 +86,7 @@ export const routes: RouteObject[] = [
               { path: 'quotes/:quoteId', element: <ContractorQuotePage /> },
               { path: 'profile', element: <ContractorProfileEditor /> },
               { path: 'portfolio', element: <PortfolioPage /> },
-              { path: 'settings', element: p('Settings', 6, 'Visibility, quote defaults and notifications.') },
+              { path: 'settings', element: <ContractorSettingsPage /> },
             ],
           },
           {
@@ -103,7 +103,7 @@ export const routes: RouteObject[] = [
                   { path: 'documents', element: <DocumentsTab /> },
                   { path: 'changes', element: <ChangesTab /> },
                   { path: 'activity', element: <ActivityTab /> },
-                  { path: 'review', element: p('Review', 6, 'Owners review the contractor once the project is complete.') },
+                  { path: 'review', element: <ReviewTab /> },
                 ],
               },
               { path: 'messages', element: <MessagesPage /> },

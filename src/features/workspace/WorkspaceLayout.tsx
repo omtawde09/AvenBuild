@@ -51,8 +51,7 @@ export function WorkspaceLayout() {
         crumbs={[{ label: 'Workspaces', to: '/workspace' }, { label: project.title }]}
         meta={
           <>
-            <StatusBadge kind="workspace" status={ws.status} />
-            <StatusBadge kind="project" status={project.status} />
+            {ws.status === 'active' ? <StatusBadge kind="project" status={project.status} /> : <StatusBadge kind="workspace" status={ws.status} />}
             <span>
               {role === 'owner' ? 'Contractor' : 'Owner'}: <strong className="font-semibold">{counterpart}</strong>
             </span>
