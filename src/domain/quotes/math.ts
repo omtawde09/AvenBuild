@@ -85,3 +85,8 @@ export function computeQuoteTotals(content: Pick<QuoteContent, 'lineItems' | 'di
 export function safeQuoteTotals(content: Pick<QuoteContent, 'lineItems' | 'discount' | 'taxPercent'>): QuoteTotals | null {
   return validateQuoteNumbers(content).length ? null : computeQuoteTotals(content);
 }
+
+/** Total in paise, or null when the quote can't be totalled yet. */
+export function quoteTotal(content: Pick<QuoteContent, 'lineItems' | 'discount' | 'taxPercent'>): Paise | null {
+  return safeQuoteTotals(content)?.totalPaise ?? null;
+}

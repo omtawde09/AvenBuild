@@ -7,6 +7,16 @@ import { LandingPage } from '@/features/public/LandingPage';
 import { StartPage } from '@/features/public/StartPage';
 import { HelpPage } from '@/features/public/HelpPage';
 import { NotFoundPage } from '@/features/public/NotFoundPage';
+import { OwnerDashboard } from '@/features/owner/OwnerDashboard';
+import { MyProjectsPage } from '@/features/projects/MyProjectsPage';
+import { NewProjectPage, ProjectEditPage } from '@/features/projects/ProjectEditPage';
+import { ProjectDetailPage } from '@/features/projects/ProjectDetailPage';
+import { ReceivedQuotesPage } from '@/features/quotes/ReceivedQuotesPage';
+import { OwnerQuotePage } from '@/features/quotes/OwnerQuotePage';
+import { ComparePage } from '@/features/quotes/ComparePage';
+import { DiscoverPage } from '@/features/contractors/DiscoverPage';
+import { ContractorProfilePage } from '@/features/contractors/ContractorProfilePage';
+import { ShortlistPage } from '@/features/contractors/ShortlistPage';
 import { RequirePersona, RequireRole } from './guards';
 import { RouteErrorScreen } from './RootErrorBoundary';
 
@@ -32,17 +42,17 @@ export const routes: RouteObject[] = [
             path: 'owner',
             element: <RequireRole role="owner" />,
             children: [
-              { index: true, element: p('Owner dashboard', 3, 'Project summary, quote activity, next actions and recent site updates.') },
-              { path: 'projects', element: p('My projects', 3, 'Search, filter and manage your project briefs.') },
-              { path: 'projects/new', element: p('Post a project', 3, 'A step-by-step brief with draft saving and a review step.') },
-              { path: 'projects/:projectId', element: p('Project', 3, 'Brief, lifecycle actions and quote summary.') },
-              { path: 'projects/:projectId/edit', element: p('Edit project', 3, 'Resume a draft or edit allowed fields.') },
-              { path: 'projects/:projectId/quotes', element: p('Received quotes', 3, 'Quotes for this project.') },
-              { path: 'projects/:projectId/quotes/:quoteId', element: p('Quote', 3, 'Quote detail with revision, accept and decline.') },
-              { path: 'projects/:projectId/compare', element: p('Compare quotes', 3, 'Side-by-side comparison of 2–4 quotes.') },
-              { path: 'contractors', element: p('Find contractors', 3, 'Search demo contractors by trade, city, rating and availability.') },
-              { path: 'contractors/:contractorId', element: p('Contractor profile', 3, 'Services, areas, portfolio and reviews.') },
-              { path: 'shortlist', element: p('Shortlist', 3, 'Contractors you have bookmarked.') },
+              { index: true, element: <OwnerDashboard /> },
+              { path: 'projects', element: <MyProjectsPage /> },
+              { path: 'projects/new', element: <NewProjectPage /> },
+              { path: 'projects/:projectId', element: <ProjectDetailPage /> },
+              { path: 'projects/:projectId/edit', element: <ProjectEditPage /> },
+              { path: 'projects/:projectId/quotes', element: <ReceivedQuotesPage /> },
+              { path: 'projects/:projectId/quotes/:quoteId', element: <OwnerQuotePage /> },
+              { path: 'projects/:projectId/compare', element: <ComparePage /> },
+              { path: 'contractors', element: <DiscoverPage /> },
+              { path: 'contractors/:contractorId', element: <ContractorProfilePage /> },
+              { path: 'shortlist', element: <ShortlistPage /> },
               { path: 'settings', element: p('Settings', 6, 'Profile, contact and notification preferences.') },
             ],
           },

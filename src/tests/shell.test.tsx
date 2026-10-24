@@ -35,7 +35,7 @@ describe('app shell and persona selection', () => {
     render(<RouterProvider router={router} />);
     expect(screen.getByRole('heading', { name: /This page is for Property Owners/ })).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: /Switch to Property Owner persona/ }));
-    expect(screen.getByRole('heading', { level: 1, name: 'Owner dashboard' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: /Good to see you, Meera/ })).toBeInTheDocument();
   });
 
   it('reset requires confirmation and cancelling keeps the persona', async () => {
