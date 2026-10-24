@@ -1,4 +1,4 @@
-# Evan Build — Architecture (Demo Prototype)
+# AvenBuild — Architecture (Demo Prototype)
 
 **Status:** Phase 0 planning document · **Date:** 2026-10-24
 Companion docs: `product-spec.md` (entities and rules), `ux-and-route-map.md` (routes), `acceptance-checklist.md`.
@@ -160,9 +160,9 @@ type LoadResult =
 type SaveResult = { kind: 'ok' } | { kind: 'failed'; reason: 'quota' | 'unavailable' };
 ```
 
-- **Key:** `evanbuild.demo` (a single key). **Envelope:** `{ schemaVersion: number, savedAt: string, data: unknown }`.
+- **Key:** `avenbuild.demo` (a single key). **Envelope:** `{ schemaVersion: number, savedAt: string, data: unknown }`.
 - **Load pipeline:** read → `JSON.parse` (in try/catch) → check envelope shape → `migrate(fromVersion → CURRENT)` via an ordered `migrations` map → validate `data` with `demoStateSchema` (Zod) → referential-integrity check (e.g. every quote's project exists) → `ok`. Any failure → `recovered`, and the store loads the seed.
-- **Recovery UX:** a non-blocking banner/toast such as "Saved demo data couldn't be read (invalid format), so the original demo data was restored." The broken raw string is copied to `evanbuild.demo.corrupt-backup` (best effort, ignored if quota fails) for debugging.
+- **Recovery UX:** a non-blocking banner/toast such as "Saved demo data couldn't be read (invalid format), so the original demo data was restored." The broken raw string is copied to `avenbuild.demo.corrupt-backup` (best effort, ignored if quota fails) for debugging.
 - **Save:** the store subscribes and saves after every committed command, coalesced with `queueMicrotask`/a short debounce. On `quota`/`unavailable` the app keeps working in memory and shows a persistent notice: "Changes in this session can't be saved in this browser." It never shows a false "saved".
 - **Cross-tab:** a `storage` event on the key → reload through the same validated pipeline → replace the store state → keep the current route. If the record the user is viewing has disappeared (for example after a reset in another tab), the page shows its not-found state with a link back.
 - **Reset demo data:** confirm dialog → `clear()` → build the seed with a new anchor → save → navigate to `/start` with a toast. The active persona is cleared.
@@ -424,7 +424,7 @@ Domain unit tests live next to the code (`*.test.ts`). Flow tests (RTL) live in 
 | Layer | Demo | Future |
 |---|---|---|
 | `StorageAdapter` | localStorage | Replaced by an API-backed repository. Commands become server calls, and the server re-runs the same transition rules authoritatively (client checks are UX only). |
-| `src/domain` | Pure TS | Shared package (`@evanbuild/domain`) used by web, Expo and server. |
+| `src/domain` | Pure TS | Shared package (`@avenbuild/domain`) used by web, Expo and server. |
 | `src/lib/validation` | Zod | Shared with server (request validation) and Expo forms. |
 | Persona selector | Local only | Real auth + session + server-side role authorization. |
 | Notifications/messages | Local events | Server events + realtime channel + push/email adapters. |

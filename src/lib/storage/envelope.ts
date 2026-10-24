@@ -3,8 +3,10 @@ import { demoStateSchema, referentialProblem } from '@/lib/validation/demoState'
 import type { LoadResult } from './adapter';
 import { migrations } from './migrations';
 
-export const STORAGE_KEY = 'evanbuild.demo';
-export const CORRUPT_BACKUP_KEY = 'evanbuild.demo.corrupt-backup';
+export const STORAGE_KEY = 'avenbuild.demo';
+export const CORRUPT_BACKUP_KEY = 'avenbuild.demo.corrupt-backup';
+/** Key used before the product was renamed; read once so existing demo data carries over. */
+export const LEGACY_STORAGE_KEY = 'evanbuild.demo';
 
 export interface Envelope {
   schemaVersion: number;

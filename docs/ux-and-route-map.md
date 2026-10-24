@@ -1,4 +1,4 @@
-# Evan Build — UX and Route Map
+# AvenBuild — UX and Route Map
 
 **Status:** Phase 0 planning document · **Date:** 2026-10-24
 Router: React Router 7 data router (`createBrowserRouter`). Every route below exists from Phase 1. Routes whose screens arrive in a later phase render a clearly marked placeholder ("Coming in Phase N of this demo build") with a working link back. They are never dead links.

@@ -1,4 +1,4 @@
-# Evan Build — Acceptance Checklist
+# AvenBuild — Acceptance Checklist
 
 **Status:** Phase 7 results · **Last run:** 2026-10-24
 An item is **Pass** only when it was actually executed: by an automated test (file named) or a manual check (described). Items that were implemented but not exercised are marked **Not run**.

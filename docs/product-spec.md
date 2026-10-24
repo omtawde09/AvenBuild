@@ -1,15 +1,15 @@
-# Evan Build — Product Specification (Demo Prototype)
+# AvenBuild — Product Specification (Demo Prototype)
 
 **Status:** Phase 0 planning document · **Date:** 2026-10-24
 **Source of requirements:** `evan_build_claude_code_phase_prompts.md` (the prompt pack). Where this spec makes a choice the prompt pack leaves open, it is marked **Decision** and can be revised.
 
-"Evan Build" is a working product name only. No trademark clearance is implied.
+"AvenBuild" is a working product name only. No trademark clearance is implied.
 
 ---
 
 ## 1. Product summary
 
-Evan Build is a marketplace web app connecting **Property Owners** who need construction work done with **Contractors** who do it. It covers the full lifecycle, not just lead discovery:
+AvenBuild is a marketplace web app connecting **Property Owners** who need construction work done with **Contractors** who do it. It covers the full lifecycle, not just lead discovery:
 
 1. Owner posts a structured project brief.
 2. Contractors whose services and service areas match discover the lead.

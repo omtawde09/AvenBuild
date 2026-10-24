@@ -1,10 +1,10 @@
-# Evan Build — Demo Limitations and Backend Replacement
+# AvenBuild — Demo Limitations and Backend Replacement
 
 **Status:** Phase 8 handoff · **Date:** 2026-10-24
 
 ## 1. What the prototype is today
 
-- A Vite + React 19 single-page app. **All state lives in one browser profile's `localStorage`** under the key `evanbuild.demo`.
+- A Vite + React 19 single-page app. **All state lives in one browser profile's `localStorage`** under the key `avenbuild.demo`.
 - Both personas (Property Owner "Meera Kulkarni" and Contractor "Sahyadri Waterproofing & Civil Works") read and write the same local state; persona switching is a testing shortcut.
 - Domain rules run in the browser as pure functions (`src/domain`). There is no server and no network traffic beyond loading static assets.
 
@@ -23,7 +23,7 @@ Derived values (quote totals, unread counts, progress, rating aggregates, pipeli
 
 ### Persistence and versioning
 
-- The envelope is `{ schemaVersion, savedAt, data }`. On load: JSON parse → envelope check → ordered migrations (`src/lib/storage/migrations.ts`, currently none) → Zod schema validation (`src/lib/validation/demoState.ts`) → referential checks. Any failure restores the seed, backs up the bad payload to `evanbuild.demo.corrupt-backup`, and shows a notice.
+- The envelope is `{ schemaVersion, savedAt, data }`. On load: JSON parse → envelope check → ordered migrations (`src/lib/storage/migrations.ts`, currently none) → Zod schema validation (`src/lib/validation/demoState.ts`) → referential checks. Any failure restores the seed, backs up the bad payload to `avenbuild.demo.corrupt-backup`, and shows a notice.
 - Save failures (quota exceeded or storage blocked) keep the session working in memory and show a persistent "can't save" notice.
 - A `storage` event listener refreshes other tabs in the same profile and keeps each tab's own persona.
 - To change the schema: bump `SCHEMA_VERSION`, add `migrations[n]`, update the Zod schema, and add a test in `src/tests/domain/storage.test.ts`.

@@ -1,9 +1,9 @@
 {
-  "name": "evan-build",
+  "name": "avenbuild",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Evan Build \u00e2\u20ac\u201d local-only demo prototype of a property owner / contractor marketplace.",
+  "description": "AvenBuild — local-only demo prototype of a property owner / contractor marketplace.",
   "engines": {
     "node": ">=22.13.0"
   },

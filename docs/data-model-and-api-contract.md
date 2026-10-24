@@ -1,4 +1,4 @@
-# Evan Build — Data Model and Proposed API Contract
+# AvenBuild — Data Model and Proposed API Contract
 
 **Status:** Phase 8 handoff · **Date:** 2026-10-24
 The data model below is what the prototype implements today (`src/domain/types.ts`). The API is a **proposal** for the future backend: nothing in the prototype calls it. Endpoint shapes map one-to-one to existing domain commands, so the same rules (`src/domain`) can run on the server.

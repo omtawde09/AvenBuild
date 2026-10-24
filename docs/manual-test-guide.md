@@ -1,4 +1,4 @@
-# Evan Build — Manual Test Guide
+# AvenBuild — Manual Test Guide
 
 **Status:** Phase 8 handoff · **Date:** 2026-10-24
 Use this guide to demo the prototype or verify a release by hand. Automated coverage is listed in `acceptance-checklist.md`.
@@ -12,7 +12,7 @@ npm run dev            # http://localhost:5173
 
 Other commands: `npm run check` (type-check, lint, unit tests, build) · `npm run e2e` (Playwright; uses the installed Edge, or `PW_CHANNEL=chrome`) · `npm run build && npm run preview` (production build).
 
-**Reset to a known state:** click **Reset** in the yellow demo banner (or go to `/help` → *Reset demo data*), then confirm. This restores the original sample scenario and returns you to `/start`. To recover from a broken state by hand: open DevTools → Application → Local Storage and delete `evanbuild.demo`.
+**Reset to a known state:** click **Reset** in the yellow demo banner (or go to `/help` → *Reset demo data*), then confirm. This restores the original sample scenario and returns you to `/start`. To recover from a broken state by hand: open DevTools → Application → Local Storage and delete `avenbuild.demo`.
 
 Test on a phone-sized viewport (375 px) first, then desktop. Watch the browser console: there should be no errors.
 
@@ -42,7 +42,7 @@ Test on a phone-sized viewport (375 px) first, then desktop. Watch the browser c
 - Quote composer: quantity `-5` or rate `12.345` → field errors; nothing is submitted.
 - Empty message → "Write a message before sending."
 - Open **Accept quote** and press **Cancel** → nothing changes.
-- DevTools: set `evanbuild.demo` to `{bad` and reload → a recovery notice is shown and the sample data is restored.
+- DevTools: set `avenbuild.demo` to `{bad` and reload → a recovery notice is shown and the sample data is restored.
 - Make a contractor profile **Hidden** in settings → it disappears from owner search.
 - Pause a project as the owner → it leaves the contractor feed and quotes can't be accepted until it's reopened.
 

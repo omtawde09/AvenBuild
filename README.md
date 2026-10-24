@@ -1,10 +1,10 @@
-# Evan Build — demo prototype
+# AvenBuild — demo prototype
 
 A responsive web prototype of a property-owner ↔ contractor construction marketplace.
 **Local-only demo:** there is no backend, database, real sign-in, payment or messaging service. All data lives in this browser's
 `localStorage` and does not sync between devices or people.
 
-"Evan Build" is a working name; no trademark clearance is implied. All people, businesses and reviews are fictional sample data.
+"AvenBuild" is a working name; no trademark clearance is implied. All people, businesses and reviews are fictional sample data.
 
 ## Requirements
 

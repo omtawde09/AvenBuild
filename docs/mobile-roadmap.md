@@ -1,4 +1,4 @@
-# Evan Build — Mobile Roadmap (React Native / Expo)
+# AvenBuild — Mobile Roadmap (React Native / Expo)
 
 **Status:** Phase 8 handoff · **Date:** 2026-10-24
 No mobile app exists yet. This document describes a realistic path from the web prototype to native iOS/Android clients. The web UI **cannot** be reused in React Native as-is: it renders DOM elements styled with Tailwind CSS. What can be reused is the framework-independent core.
@@ -26,7 +26,7 @@ packages/
   domain/       ← src/domain + src/lib/validation + src/lib/format + config/locale (no React)
   tokens/       ← design tokens as JSON
 apps/
-  web/          ← this Vite app, importing @evanbuild/domain
+  web/          ← this Vite app, importing @avenbuild/domain
   mobile/       ← Expo (Expo Router, React Native, TanStack Query for API data)
   api/          ← server (see demo-limitations-and-backend-replacement.md)
 ```
@@ -50,7 +50,7 @@ Step 1 is purely mechanical: move `src/domain` and `src/lib/validation` into `pa
 2. Stand up the API with auth, projects, quotes and accept (backend doc, tasks 1–4).
 3. Build the Expo **contractor** app first (lead feed, quote composer, site updates with photos), because contractors are on site and benefit most from native camera and push.
 4. Build the owner flows (post project, compare, approve milestones).
-5. Add push notifications, offline queueing and deep links (`evanbuild://workspace/:id`) using the same route shapes as `src/domain/links.ts`.
+5. Add push notifications, offline queueing and deep links (`avenbuild://workspace/:id`) using the same route shapes as `src/domain/links.ts`.
 
 ## 5. Risks
 

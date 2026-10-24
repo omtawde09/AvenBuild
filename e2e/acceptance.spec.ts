@@ -262,7 +262,7 @@ test('H8 failure paths: no results, invalid input, empty messages, cancelled dia
   await expect(page.getByText('Quantity must be greater than 0.').first()).toBeVisible();
 
   // Malformed storage recovers to the seed with a notice.
-  await page.evaluate(() => localStorage.setItem('evanbuild.demo', '{"schemaVersion":1,"data":{broken'));
+  await page.evaluate(() => localStorage.setItem('avenbuild.demo', '{"schemaVersion":1,"data":{broken'));
   await page.goto('/start');
   await page.getByRole('button', { name: new RegExp(OWNER) }).click();
   await expect(page.getByText(/Saved demo data in this browser was damaged/)).toBeVisible();
@@ -272,7 +272,7 @@ test('H8 failure paths: no results, invalid input, empty messages, cancelled dia
   await quotaPage.addInitScript(() => {
     const original = Storage.prototype.setItem;
     Storage.prototype.setItem = function setItem(key: string, value: string) {
-      if (key === 'evanbuild.demo' && (window as unknown as { __fillQuota?: boolean }).__fillQuota) throw new DOMException('Quota exceeded', 'QuotaExceededError');
+      if (key === 'avenbuild.demo' && (window as unknown as { __fillQuota?: boolean }).__fillQuota) throw new DOMException('Quota exceeded', 'QuotaExceededError');
       return original.call(this, key, value);
     };
   });

@@ -4,7 +4,7 @@ import { P } from '@/data/seed/ids';
 import { sequentialIdFactory } from '@/domain/ids';
 import { updateDraft } from '@/domain/projects/commands';
 import { initDemoStore, useDemoStore } from '@/app/store/demoStore';
-import { CORRUPT_BACKUP_KEY, STORAGE_KEY, unwrap, wrap } from '@/lib/storage/envelope';
+import { CORRUPT_BACKUP_KEY, LEGACY_STORAGE_KEY, STORAGE_KEY, unwrap, wrap } from '@/lib/storage/envelope';
 import { createLocalStorageAdapter } from '@/lib/storage/localStorageAdapter';
 import { createMemoryAdapter } from '@/lib/storage/memoryAdapter';
 import { demoStateSchema } from '@/lib/validation/demoState';
@@ -54,6 +54,16 @@ describe('storage envelope recovery', () => {
     expect(unwrap(JSON.stringify({ schemaVersion: 1, savedAt: '', data: broken }))).toMatchObject({ kind: 'recovered', reason: 'invalid' });
     const orphan = { ...seed, quotes: { ...seed.quotes, qt_x: { ...Object.values(seed.quotes)[0], id: 'qt_x', projectId: 'prj_missing' } } };
     expect(unwrap(JSON.stringify({ schemaVersion: 1, savedAt: '', data: orphan }))).toMatchObject({ kind: 'recovered', reason: 'invalid' });
+  });
+
+  it('carries demo data over from the pre-rename storage key, then retires it', () => {
+    window.localStorage.setItem(LEGACY_STORAGE_KEY, wrap(buildSeed(TEST_ANCHOR), 'before rename'));
+    const adapter = createLocalStorageAdapter();
+    const loaded = adapter.load();
+    expect(loaded.kind).toBe('ok');
+    // Moved on load, before any save.
+    expect(window.localStorage.getItem(STORAGE_KEY)).not.toBeNull();
+    expect(window.localStorage.getItem(LEGACY_STORAGE_KEY)).toBeNull();
   });
 
   it('localStorage adapter backs up corrupt data and reports quota failures without throwing', () => {
