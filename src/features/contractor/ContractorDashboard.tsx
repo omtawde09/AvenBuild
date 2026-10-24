@@ -61,7 +61,7 @@ export function ContractorDashboard() {
         Counts come from the projects and quotes stored in this demo. Owners have decided on {metrics.decided} of your quotes so far; {metrics.accepted} {metrics.accepted === 1 ? 'was' : 'were'} accepted.
       </p>
 
-      <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-10">
           {needsAction.length ? (
             <section aria-labelledby="todo">

@@ -92,7 +92,7 @@ export function ProjectDetailPage() {
         </Notice>
       ) : null}
 
-      <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.5fr_1fr]">
         <div className="space-y-10">
           <section aria-labelledby="quotes-heading">
             <SectionHeading

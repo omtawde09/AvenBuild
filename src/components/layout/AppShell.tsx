@@ -174,10 +174,10 @@ function ProfileMenu({ role }: { role: Role }) {
           type="button"
           {...props}
           className="flex min-h-11 items-center gap-2 rounded-sm px-1.5 hover:bg-sunken sm:px-2"
-          aria-label={`Persona menu: ${name}, ${roleLabel[role]}`}
+          title={`Persona menu: ${name}, ${roleLabel[role]}`}
         >
           <Avatar name={name} size="sm" />
-          <span className="hidden max-w-44 text-left leading-tight lg:block">
+          <span className="sr-only max-w-44 text-left leading-tight lg:not-sr-only lg:block">
             <span className="block truncate text-sm font-semibold">{name}</span>
             <span className="block text-xs text-ink-3">{roleLabel[role]} · demo</span>
           </span>
@@ -205,6 +205,16 @@ function ProfileMenu({ role }: { role: Role }) {
   );
 }
 
+function HeaderCount({ count }: { count: number }) {
+  // Visible count is part of the accessible name ("Messages 3 unread"), matching what sighted users see.
+  return (
+    <span className="absolute top-1 right-1 min-w-[1.125rem] rounded-full bg-brick px-1 text-center font-mono text-[0.6875rem] leading-[1.125rem] font-medium text-white tabular">
+      {count > 99 ? '99+' : count}
+      <span className="sr-only"> unread</span>
+    </span>
+  );
+}
+
 /** Signed-in application shell: demo banner, top bar, desktop sidebar, mobile bottom navigation. */
 export function AppShell() {
   const role = useActiveRole();
@@ -227,7 +237,7 @@ export function AppShell() {
       <DemoBanner />
       <header className="sticky top-0 z-30 border-b border-line bg-paper/95 backdrop-blur-sm">
         <div className="mx-auto flex h-14 max-w-[90rem] items-center gap-2 px-2 sm:px-4">
-          <Link to={roleHome[role]} className="flex min-h-11 items-center px-2" aria-label={`${brand.name} — ${roleLabel[role]} home`}>
+          <Link to={roleHome[role]} className="flex min-h-11 items-center px-2" title={`${brand.name} — ${roleLabel[role]} home`}>
             <Wordmark />
           </Link>
           <span className="hidden rounded-xs border border-line-strong px-1.5 py-0.5 font-mono text-[0.6875rem] tracking-wide text-ink-2 uppercase sm:inline">
@@ -245,18 +255,20 @@ export function AppShell() {
           <Link
             to="/messages"
             className="relative hidden size-11 items-center justify-center rounded-sm hover:bg-sunken md:inline-flex"
-            aria-label={counts.unreadMessages ? `Messages (${counts.unreadMessages} unread)` : 'Messages'}
+            title="Messages"
           >
             <MessagesSquare aria-hidden className="size-5" />
-            {counts.unreadMessages ? <CountBadge count={counts.unreadMessages} /> : null}
+            <span className="sr-only">Messages</span>
+            {counts.unreadMessages ? <HeaderCount count={counts.unreadMessages} /> : null}
           </Link>
           <Link
             to="/notifications"
             className="relative inline-flex size-11 items-center justify-center rounded-sm hover:bg-sunken"
-            aria-label={counts.unreadNotifications ? `Notifications (${counts.unreadNotifications} unread)` : 'Notifications'}
+            title="Notifications"
           >
             <Bell aria-hidden className="size-5" />
-            {counts.unreadNotifications ? <CountBadge count={counts.unreadNotifications} /> : null}
+            <span className="sr-only">Notifications</span>
+            {counts.unreadNotifications ? <HeaderCount count={counts.unreadNotifications} /> : null}
           </Link>
           <ProfileMenu role={role} />
         </div>

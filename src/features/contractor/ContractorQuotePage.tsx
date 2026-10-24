@@ -109,7 +109,7 @@ export function ContractorQuotePage() {
           It was valid until {formatDate(quote.content.validUntil)}. The owner can’t accept it unless they ask for a revision. You can also withdraw and resubmit with a new date.
         </Notice>
       ) : null}
-      <div className="grid gap-10 lg:grid-cols-[1fr_16rem]">
+      <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1fr_16rem]">
         <QuoteBreakdown content={quote.content} />
         <aside aria-labelledby="timeline">
           <SectionHeading id="timeline" title="Timeline" as="h3" />

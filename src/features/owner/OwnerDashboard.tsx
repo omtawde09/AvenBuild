@@ -66,7 +66,7 @@ export function OwnerDashboard() {
         ))}
       </dl>
 
-      <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-10">
           <section aria-labelledby="next-actions">
             <SectionHeading id="next-actions" title="Needs your attention" description="Things only you can move forward." />

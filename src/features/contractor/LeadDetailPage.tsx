@@ -104,7 +104,7 @@ export function LeadDetailPage() {
         </Notice>
       ) : null}
 
-      <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.5fr_1fr]">
         <div className="space-y-8">
           <section aria-labelledby="scope">
             <SectionHeading id="scope" title="Scope of work" />

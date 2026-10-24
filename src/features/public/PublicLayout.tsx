@@ -17,7 +17,7 @@ export function PublicLayout() {
       <DemoBanner />
       <header className="border-b border-line">
         <div className="container-page flex h-16 items-center gap-2">
-          <Link to="/" className="-ml-2 flex min-h-11 items-center px-2" aria-label={`${brand.name} home`}>
+          <Link to="/" className="-ml-2 flex min-h-11 items-center px-2" title={`${brand.name} home`}>
             <Wordmark />
           </Link>
           <nav aria-label="Site" className="ml-6 hidden md:block">

@@ -95,7 +95,7 @@ export function NotificationsPage() {
                 <span className={cn('mt-0.5 block', n.readAt ? 'font-medium' : 'font-semibold')}>{n.title}</span>
                 <span className="block text-sm text-ink-2">{n.body}</span>
               </button>
-              <Button size="sm" variant="ghost" onClick={() => command((s, c) => setNotificationRead(s, n.id as NotificationId, !n.readAt, c))} aria-label={n.readAt ? `Mark “${n.title}” as unread` : `Mark “${n.title}” as read`}>
+              <Button size="sm" variant="ghost" onClick={() => command((s, c) => setNotificationRead(s, n.id as NotificationId, !n.readAt, c))} aria-label={n.readAt ? `Mark unread: ${n.title}` : `Mark read: ${n.title}`}>
                 {n.readAt ? 'Mark unread' : 'Mark read'}
               </Button>
             </li>

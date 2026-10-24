@@ -16,7 +16,7 @@ export function WorkspaceOverview() {
   const activity = projectActivity(data, project.id).slice(0, 5);
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+    <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1.4fr_1fr]">
       <div className="space-y-10">
         {ws.status === 'cancelled' ? (
           <Notice tone="warn" title="This project was cancelled">

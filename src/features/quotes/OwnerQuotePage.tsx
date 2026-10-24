@@ -111,7 +111,7 @@ export function OwnerQuotePage() {
         </Notice>
       ) : null}
 
-      <div className="grid gap-10 lg:grid-cols-[1fr_18rem]">
+      <div className="grid grid-cols-1 gap-10 *:min-w-0 lg:grid-cols-[1fr_18rem]">
         <section aria-labelledby="breakdown" className="min-w-0">
           <h2 id="breakdown" className="sr-only">
             Quote breakdown

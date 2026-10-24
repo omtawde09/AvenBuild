@@ -9,7 +9,8 @@ export function TotalsBlock({ content, className }: { content: Pick<QuoteContent
   if (!totals) return <p className={cn('text-sm text-ink-3', className)}>Totals appear once every line has a valid quantity and rate.</p>;
   const discountLabel = content.discount.kind === 'percent' ? `Discount (${formatNumber(content.discount.percent)}%)` : 'Discount';
   return (
-    <dl className={cn('space-y-1.5 font-mono text-sm tabular', className)}>
+    <div className={className}>
+    <dl className="space-y-1.5 font-mono text-sm tabular">
       <div className="flex justify-between gap-4">
         <dt className="font-sans text-ink-2">Subtotal</dt>
         <dd>{formatMoneyExact(totals.subtotalPaise)}</dd>
@@ -30,8 +31,9 @@ export function TotalsBlock({ content, className }: { content: Pick<QuoteContent
         <dt className="font-sans">Total</dt>
         <dd>{formatMoneyExact(totals.totalPaise)}</dd>
       </div>
-      <p className="font-sans text-xs text-ink-3">Each line, the discount and the tax are rounded to the nearest paisa. Tax figures are demo inputs, not tax advice.</p>
     </dl>
+      <p className="mt-1.5 text-xs text-ink-3">Each line, the discount and the tax are rounded to the nearest paisa. Tax figures are demo inputs, not tax advice.</p>
+    </div>
   );
 }
 

@@ -145,6 +145,7 @@ function Thread({ conversationId }: { conversationId: string }) {
         }}
         className="relative min-h-0 flex-1 overflow-y-auto px-3 py-4 sm:px-5"
         role="log"
+        tabIndex={0}
         aria-label={`Messages with ${partyName(data, other)}`}
         aria-live="polite"
       >

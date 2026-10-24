@@ -46,6 +46,7 @@ export function RatingBreakdown({ rating }: { rating: ReviewAggregate }) {
           })}
         </ol>
       </div>
+      <div>
       <dl className="space-y-2 text-sm">
         {dims.map(([label, v]) => (
           <div key={label} className="flex justify-between gap-3 border-b border-line pb-1.5">
@@ -53,8 +54,9 @@ export function RatingBreakdown({ rating }: { rating: ReviewAggregate }) {
             <dd className="font-semibold tabular">{v === null ? '—' : `${v.toFixed(1)} / 5`}</dd>
           </div>
         ))}
-        <p className="pt-1 text-xs text-ink-3">Category scores are optional, so they may be based on fewer reviews than the overall average.</p>
       </dl>
+        <p className="pt-2 text-xs text-ink-3">Category scores are optional, so they may be based on fewer reviews than the overall average.</p>
+      </div>
     </div>
   );
 }

@@ -11,7 +11,14 @@ import { SeedArt } from './SeedArt';
 
 /** Thumbnail for an attachment: bundled illustration, session preview, or a clear "no preview" state. */
 export function AttachmentThumb({ file, className }: { file: AttachmentMeta; className?: string }) {
-  if (file.previewKind === 'seed') return <SeedArt art={file.seedArt} className={cn('rounded-xs border border-line', className)} />;
+  if (file.previewKind === 'seed') {
+    // Size lives on the wrapper so the illustration (which fills its parent) can't override it.
+    return (
+      <div className={cn('shrink-0 overflow-hidden rounded-xs border border-line', className)}>
+        <SeedArt art={file.seedArt} />
+      </div>
+    );
+  }
   const url = file.previewKind === 'session' ? previewUrlFor(file.id) : null;
   if (url) return <img src={url} alt={`Preview of ${file.name}`} className={cn('rounded-xs border border-line object-cover', className)} />;
   const Icon = file.mimeType.startsWith('image/') ? ImageOff : FileText;

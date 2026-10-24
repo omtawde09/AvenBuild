@@ -84,8 +84,7 @@ Legend: **Phase** = the phase that delivers the full screen. **Guard**: `public`
 
 | Breakpoint | Owner nav | Contractor nav |
 |---|---|---|
-| < 768px (mobile) | **Bottom nav, 5 items:** Home, Projects, Find pros, Messages, More (sheet: Shortlist, Workspaces, Notifications, Settings, Help, Switch persona, Reset). The primary "Post project" action is on Home and Projects (sticky). | **Bottom nav, 5 items:** Home, Leads, Quotes, Messages, More (sheet: Workspaces, Profile, Portfolio, Notifications, Settings, Help, Switch persona, Reset) |
-| 768–1023px | Collapsible left rail (icons + labels on expand), top bar as above | same |
+| < 1024px (phones and tablets) | **Bottom nav, 5 items:** Home, Projects, Find pros, Messages, More (sheet: Shortlist, Workspaces, Notifications, Settings, Help, Switch persona, Reset). The primary "Post project" action is on Home and Projects (sticky). | **Bottom nav, 5 items:** Home, Leads, Quotes, Messages, More (sheet: Workspaces, Profile, Portfolio, Notifications, Settings, Help, Switch persona, Reset) |
 | ≥ 1024px | Fixed left sidebar with labelled sections, top bar with breadcrumbs | same |
 
 Mobile rules:

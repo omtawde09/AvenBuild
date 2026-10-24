@@ -151,12 +151,15 @@ test('H5 messages, unread state, site update and milestone review persist across
 
   await becomePersona(page, OWNER);
   await page.goto('/messages');
-  await expect(page.getByText('1 unread').first()).toBeAttached();
-  await page.getByRole('link', { name: /Sahyadri/ }).first().click();
+  // The newest conversation (this project) is first and shows as unread for the owner.
+  const thread = page.getByRole('link', { name: /We start on Monday/ });
+  await expect(thread).toContainText('unread');
+  const href = await thread.getAttribute('href');
+  await thread.click();
   await expect(page.getByRole('log').getByText('We start on Monday at 9 am.')).toBeVisible();
   await page.reload();
   await page.goto('/messages');
-  await expect(page.getByText('1 unread')).toHaveCount(0);
+  await expect(page.locator(`a[href="${href}"]`)).not.toContainText('unread');
 
   // Contractor posts an update and works on milestone 1.
   await becomePersona(page, CONTRACTOR);
@@ -248,7 +251,7 @@ test('H8 failure paths: no results, invalid input, empty messages, cancelled dia
   await page.goto('/owner/projects/prj_seed_terrace/quotes/qt_seed_terrace_deccan');
   await page.getByRole('button', { name: 'Accept quote' }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Cancel' }).click();
-  await expect(page.getByText('Reviewing quotes').first()).toBeAttached();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.goto('/owner/projects/prj_seed_terrace');
   await expect(page.getByText('Reviewing quotes').first()).toBeVisible();
 
@@ -265,7 +268,7 @@ test('H8 failure paths: no results, invalid input, empty messages, cancelled dia
   await expect(page.getByText(/Saved demo data in this browser was damaged/)).toBeVisible();
 
   // A full storage quota keeps the app working and says changes can't be saved.
-  const quotaPage = await page.context().newPage();
+  const quotaPage = page;
   await quotaPage.addInitScript(() => {
     const original = Storage.prototype.setItem;
     Storage.prototype.setItem = function setItem(key: string, value: string) {
@@ -279,7 +282,6 @@ test('H8 failure paths: no results, invalid input, empty messages, cancelled dia
   });
   await quotaPage.getByRole('button', { name: 'Shortlisted' }).first().click();
   await expect(quotaPage.getByText('Changes in this session can’t be saved in this browser.')).toBeVisible();
-  await quotaPage.close();
 
   expect(errors, `console errors:\n${errors.join('\n')}`).toEqual([]);
 });

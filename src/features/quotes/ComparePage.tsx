@@ -221,7 +221,7 @@ export function ComparePage() {
           </div>
           <div className="mt-6 flex flex-wrap gap-2 md:hidden">
             {quotes.map((q) => (
-              <ButtonLink key={q.id} to={`/owner/projects/${project.id}/quotes/${q.id}`} variant="secondary" size="sm">
+              <ButtonLink key={q.id} to={`/owner/projects/${project.id}/quotes/${q.id}`} variant="secondary" size="sm" className="h-auto py-2 text-left whitespace-normal!">
                 Decide on {partyName(data, q.contractorId)}
               </ButtonLink>
             ))}

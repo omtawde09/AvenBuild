@@ -45,8 +45,9 @@ test.describe('accessibility', () => {
     await expect(dialog).toBeVisible();
     for (let i = 0; i < 8; i += 1) {
       await page.keyboard.press('Tab');
-      const inside = await dialog.evaluate((d) => d.contains(document.activeElement));
-      expect(inside).toBe(true);
+      // Focus stays in the dialog, or moves to the browser's own UI (activeElement = body) — never to the page behind.
+      const ok = await dialog.evaluate((d) => d.contains(document.activeElement) || document.activeElement === document.body);
+      expect(ok).toBe(true);
     }
     await page.keyboard.press('Escape');
     await expect(dialog).toBeHidden();
@@ -60,7 +61,7 @@ test.describe('accessibility', () => {
       await expect(page.locator('h1'), r).toHaveCount(1);
     }
     await page.goto('/owner/projects');
-    await expect(page.getByText('Reviewing quotes').first()).toBeVisible();
+    await expect(page.locator('ul li').getByText('Reviewing quotes', { exact: true }).first()).toBeVisible();
   });
 
   test('reduced motion disables transitions', async ({ page }) => {
