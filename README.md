@@ -26,6 +26,11 @@ npm run e2e          # Playwright: acceptance (375px), responsive (8 widths) and
 End-to-end tests use the Microsoft Edge already installed on the machine (`PW_CHANNEL=chrome` to use Chrome instead),
 so no browser download is needed. They build the app and serve it with `vite preview` on port 4174.
 
+## Android app
+
+`android/` is a WebView app that packages the production build into an installable APK and runs it offline.
+`cd android && ./gradlew assembleRelease` builds it — see `android/README.md`.
+
 ## Using the demo
 
 1. Open the app and choose **Property Owner** or **Contractor** on `/start` (no password — this is not authentication).

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mirrors the tokens in src/styles/index.css. -->
+    <color name="paper">#F4F1EA</color>
+    <color name="surface">#FBFAF7</color>
+    <color name="ink">#1E1C19</color>
+    <color name="brick">#B4532A</color>
+</resources>

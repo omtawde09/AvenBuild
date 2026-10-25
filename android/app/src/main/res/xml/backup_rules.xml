@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backs up the WebView's storage (where the app keeps its local data); skips caches. -->
+<full-backup-content>
+    <exclude domain="root" path="cache/" />
+</full-backup-content>
